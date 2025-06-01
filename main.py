@@ -1,11 +1,10 @@
 import os
-import pyperclip
 from tabulate import tabulate
 from termcolor import colored
 
-from gui import select_files_ui, save_file_ui
+from file_dialogs import select_files_dialog, save_file_dialog
 from utils import display_file_order, reorder_files
-from tools import merge, export
+from pdf_tools import PDFMerger
 
 def clear_screen():
     os.system('cls')
@@ -16,14 +15,16 @@ def clear_screen():
 def main():
     try:
         clear_screen()
+        merger = PDFMerger()
+
         while True:
             print(tabulate([["1", "Merge PDFs"]], tablefmt="rounded_grid"))
             select_tool = input("Choose the tool \n>> ").lower().strip()
             if select_tool in ["1", "Merge  PDFs"]:
                 clear_screen()
-                files = select_files_ui()
+                files = select_files_dialog()
                 if files is None:
-                    print(colored(f"\nPROGRAM WAS TERMINATED by the User.", "red", attrs=["bold"]))
+                    print(colored(f"\nPROGRAM WAS TERMINATED.", "red", attrs=["bold"]))
                     return
                 break
             else:
@@ -39,11 +40,17 @@ def main():
             else:
                 break
 
-        merge(files)
+        merger.merge(files)
 
-        save_path = export(save_file_ui())
-        pyperclip.copy(str(save_path))
-        print(colored(f"SUCCESS! The Merged PDF File has been saved to {save_path}", "green", attrs=["bold"]))
+        save_path = save_file_dialog()
+        if save_path is None:
+            cancel_confirm = input(f"No Save Location was selected. Press {colored("R", "blue", attrs=["bold"])} to Retry.\n>> ")
+            if cancel_confirm.lower().strip() in ["r", "retry"]:
+                save_path = save_file_dialog()
+        
+        if save_path is not None:
+            merger.export(save_path)
+            print(colored(f"SUCCESS! The Merged PDF File has been saved to {save_path}", "green", attrs=["bold"]))
 
     except KeyboardInterrupt:
         print(colored(f"\nPROGRAM WAS TERMINATED due to KeyboardInterrupt!\n", "red", attrs=["bold"]))
