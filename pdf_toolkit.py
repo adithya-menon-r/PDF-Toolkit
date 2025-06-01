@@ -1,5 +1,6 @@
 import os
 import sys
+import ctypes
 import argparse
 import tkinter
 import pyperclip
@@ -157,6 +158,14 @@ def main():
     args = parser.parse_args()
     if args.merge:
         args_merge(args.merge, args.fileName) if args.fileName else args_merge(args.merge)
+
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        try:
+            ctypes.windll.user32.SetProcessDPIAware()
+        except Exception:
+            pass
 
     try:
         clr_scr()
