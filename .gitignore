@@ -2,6 +2,6 @@
 .idea/
 __pycache__
 build
-pdf_toolkit.egg-info
 dist
+pdf_toolkit.egg-info
 pdfwerks.egg-info

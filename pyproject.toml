@@ -15,13 +15,13 @@ requires-python = ">=3.10"
 authors = [
     { name = "Adithya Menon R", email = "adukottan@gmail.com" }
 ]
-description = "A Python PDF Toolkit packaged with multiple tools for PDF manipulation"
+description = "A lightweight Python toolkit with multiple tools for PDF manipulation"
 readme = "README.md"
 license = { file = "LICENSE" }
-keywords = ["pdf", "toolkit", "pdfwerks", "tui", "cli", "python", "pdf-management"]
+keywords = ["pdfwerks", "pdf", "pdf-management", "toolkit", "tui", "cli", "python"]
 
 [project.urls]
-Repository = "https://github.com/adithya-menon-r/PDF-Toolkit.git"
+Repository = "https://github.com/adithya-menon-r/PDFwerks.git"
 
 [project.scripts]
 pdfwerks = "pdfwerks.main:main"

@@ -2,12 +2,12 @@
 
 PDFwerks is a lightweight yet comprehensive, command-line tool for working with PDFs. It provides essential PDF manipulation tools all in one easy to use package. All operations are performed locally on your machine, ensuring your sensitive documents stay secure and private. With PDFwerks, you can finally say goodbye to uploading your documents to shady websites or paying for basic PDF operations.
 
-Finally got it published to **PyPI**! [Check it out on PyPI.](https://pypi.org/project/pdfwerks)
-
-> ⚠️ Note: It is published under the name - **pdfwerks**. This is because PyPI rejected pdf-toolkit as a project name.
+[![PyPI version](https://img.shields.io/pypi/v/pdfwerks.svg)](https://pypi.org/project/pdfwerks/)
+[![Publish PDFwerks](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml)
+![License](https://img.shields.io/github/license/adithya-menon-r/PDFwerks)
 
 ## Installation & Usage
-You can now install **PDFwerks** using `pip`:
+You can install **PDFwerks** using `pip`:
 ```bash
 pip install pdfwerks
 ```
@@ -25,8 +25,8 @@ If you want to test, contribute or customize the tool locally:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/adithya-menon-r/PDF-Toolkit.git
-    cd PDF-Toolkit
+    git clone https://github.com/adithya-menon-r/PDFwerks.git
+    cd PDFwerks
     ```
 
 2. Create a virtual environment and activate it:
