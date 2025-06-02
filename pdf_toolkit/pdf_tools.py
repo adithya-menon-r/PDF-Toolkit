@@ -2,7 +2,7 @@ import logging
 from io import BytesIO
 from pathlib import Path
 from pypdf import PdfWriter
-from tui import ProgressBar
+from .tui import ProgressBar
 
 logging.getLogger("pypdf").setLevel(logging.ERROR)
 

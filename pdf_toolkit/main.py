@@ -4,9 +4,9 @@ import shutil
 import pyperclip
 from rich import print as printf
 
-from pdf_tools import PDFTools
-from tui import SelectionMenu, ReorderMenu
-from utils import get_files, get_save_path
+from .pdf_tools import PDFTools
+from .tui import SelectionMenu, ReorderMenu
+from .utils import get_files, get_save_path
 
 OPTIONS = ["Merge PDFs", "Exit"]
 

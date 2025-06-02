@@ -1,6 +1,6 @@
 import sys
-from tui import SelectionMenu
-from file_dialogs import select_files_dialog, save_file_dialog
+from .tui import SelectionMenu
+from .file_dialogs import select_files_dialog, save_file_dialog
 
 
 def get_files():
