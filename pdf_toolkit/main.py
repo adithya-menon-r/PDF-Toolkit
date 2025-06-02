@@ -35,7 +35,7 @@ def main():
             sys.exit(0)
 
         files = ReorderMenu(
-            "Reorder the files if required: ",
+            "Reorder the files if required: (Use ↑/↓ to navigate, SPACE to select/unselect, ENTER to confirm)",
             files
         ).run()
 
@@ -52,7 +52,7 @@ def main():
         printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n")
 
     except KeyboardInterrupt:
-        printf(f"[bold red]PROGRAM WAS TERMINATED due to KeyboardInterrupt!\n")
+        printf(f"[bold red]PDF Toolkit was terminated due to KeyboardInterrupt!\n")
 
     finally:
         printf(f"[bold #A3BE8C]Goodbye!")

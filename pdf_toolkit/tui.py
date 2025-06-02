@@ -35,6 +35,10 @@ class SelectionMenu:
             self.result = self.choices[self.selected_index]
             event.app.exit()
 
+        @self.key_binding.add("c-c")
+        def exit_(event):
+            raise KeyboardInterrupt 
+
         self.msg_content = FormattedTextControl([("class:message", self.message)])
         self.msg_window = Window(
             content=self.msg_content,
@@ -132,6 +136,10 @@ class ReorderMenu:
         @self.key_binding.add("enter")
         def confirm(event):
             event.app.exit(result=self.items)
+        
+        @self.key_binding.add("c-c")
+        def exit_(event):
+            raise KeyboardInterrupt 
 
         self.msg_content = FormattedTextControl([("class:message", self.message)])
         self.msg_window = Window(
