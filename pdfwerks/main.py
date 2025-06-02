@@ -14,7 +14,7 @@ OPTIONS = ["Merge PDFs", "Exit"]
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
     terminal_width = shutil.get_terminal_size((80, 20)).columns
-    title = "PDF Toolkit"
+    title = "PDFwerks"
     centered_title = title.center(terminal_width)
     printf(f"[bold #FFAA66  ]{centered_title}[/bold #FFAA66  ]")
     underline = "─" * terminal_width
@@ -52,7 +52,7 @@ def main():
         printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n")
 
     except KeyboardInterrupt:
-        printf(f"[bold red]PDF Toolkit was terminated due to KeyboardInterrupt!\n")
+        printf(f"[bold red]PDFwerks was terminated due to KeyboardInterrupt!\n")
 
     finally:
         printf(f"[bold #A3BE8C]Goodbye!")

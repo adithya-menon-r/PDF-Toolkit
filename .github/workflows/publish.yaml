@@ -1,4 +1,4 @@
-name: Publish PDF Toolkit to PyPI
+name: Publish PDFwerks to PyPI
 
 on:
   release:
