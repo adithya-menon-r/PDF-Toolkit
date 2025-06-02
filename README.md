@@ -1,18 +1,20 @@
-# PDF Toolkit
+# PDFwerks
 
-PDF Toolkit is a lightweight yet comprehensive, command-line tool for working with PDFs. It provides essential PDF manipulation tools all in one easy to use package. All operations are performed locally on your machine, ensuring your sensitive documents stay secure and private. With PDF Toolkit, you can finally say goodbye to uploading your documents to shady websites or paying for basic PDF operations.
+PDFwerks is a lightweight yet comprehensive, command-line tool for working with PDFs. It provides essential PDF manipulation tools all in one easy to use package. All operations are performed locally on your machine, ensuring your sensitive documents stay secure and private. With PDFwerks, you can finally say goodbye to uploading your documents to shady websites or paying for basic PDF operations.
 
-Finally got it published to **PyPI**! [Check it out on PyPI.](https://pypi.org/project/pdf-toolkit)
+Finally got it published to **PyPI**! [Check it out on PyPI.](https://pypi.org/project/pdfwerks)
+
+> ⚠️ Note: It is published under the name - **pdfwerks**. This is because PyPI rejected pdf-toolkit as a project name.
 
 ## Installation & Usage
-You can now install **PDF Toolkit** using `pip`:
+You can now install **PDFwerks** using `pip`:
 ```bash
-pip install pdf-toolkit
+pip install pdfwerks
 ```
 
 Once installed, run the tool from your terminal with:
 ```bash
-pdf-toolkit
+pdfwerks
 ```
 
 > Note: This project is still a work in progress. Currently, only the **`Merge PDFs`** tool is available. More tools and features like CLA based usage are in the works. 
