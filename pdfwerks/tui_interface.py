@@ -36,20 +36,20 @@ def run_tui():
             ).run()
 
             if len(files) < 2:
-                printf(f"[bold red]✗ Merge Failed: At least 2 files are required to merge. Only 1 was selected!\n[/bold red]")
+                printf("[bold red]✗ Merge Failed: At least 2 files are required to merge. Only 1 was selected!\n[/bold red]")
                 sys.exit(1)
 
             tool.merge(files)
             save_path = get_save_path()
             tool.export(save_path)
             pyperclip.copy(save_path)
-            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n[/bold #FFD580]")
+            printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n[/bold #FFD580]")
 
         elif menu_choice == "Exit":
             sys.exit(0)
 
     except KeyboardInterrupt:
-        printf(f"[bold red]PDFwerks was terminated due to KeyboardInterrupt!\n[/bold red]")
+        printf("[bold red]PDFwerks was terminated due to KeyboardInterrupt!\n[/bold red]")
 
     finally:
-        printf(f"[bold #A3BE8C]Goodbye![/bold #A3BE8C]")
+        printf("[bold #A3BE8C]Goodbye![/bold #A3BE8C]")
