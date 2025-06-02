@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf-toolkit"
+version = "0.1.0"
+dependencies = [
+  "rich>=14.0.0",
+  "prompt_toolkit>=3.0.0",
+  "pypdf>=5.0.0",
+  "pyperclip>=1.8.0"
+]
+requires-python = ">=3.10"
+authors = [
+    { name = "Adithya Menon R", email = "adukottan@gmail.com" }
+]
+description = "A Python PDF Toolkit packaged with multiple tools for PDF manipulation via the TUI"
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = ["pdf", "toolkit", "tui", "cli", "python", "pdf-management"]
+
+[project.urls]
+Repository = "https://github.com/adithya-menon-r/PDF-Toolkit.git"
+
+[project.scripts]
+pdf-toolkit = "pdf_toolkit.main:main"
