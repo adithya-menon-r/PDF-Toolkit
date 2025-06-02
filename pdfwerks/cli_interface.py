@@ -18,6 +18,40 @@ def get_default_save_path():
     return str(downloads / "merged.pdf")
 
 
+def validate_pdf_files(files):
+    invalid_files = []
+    valid_files = []
+
+    for f in files:
+        path = Path(f)
+        if not path.is_file():
+            invalid_files.append(f"{f} (Not Found)")
+        elif not f.lower().endswith(".pdf"):
+            invalid_files.append(f"{f} (Not a Valid PDF)")
+        else:
+            valid_files.append(f)
+
+    if invalid_files:
+        printf("[bold yellow]⚠  Warning: Some files were ignored:[/bold yellow]")
+        for msg in invalid_files:
+            printf(f"   - {msg}")
+        print()
+
+    return valid_files
+
+
+def get_unique_save_path(save_path):
+    save_path = Path(save_path)
+    if not save_path.exists():
+        return save_path
+    counter = 1
+    while True:
+        new_path = save_path.with_name(f"{save_path.stem}_{counter}{save_path.suffix}")
+        if not new_path.exists():
+            return new_path
+        counter += 1
+
+
 def run_cli():
     parser = argparse.ArgumentParser(
         prog="pdfwerks",
@@ -54,15 +88,18 @@ def run_cli():
     args = parser.parse_args()
 
     if args.command == "merge":
-        if len(args.input_files) < 2:
+        files = validate_pdf_files(args.input_files)
+
+        if len(files) < 2:
             printf("[bold red]✗ Merge Failed: At least 2 input files are required to merge.[/bold red]")
             sys.exit(1)
 
         save_path = args.output or get_default_save_path()
+        save_path = get_unique_save_path(save_path)
 
         try:
             tool = PDFTools()
-            tool.merge(args.input_files)
+            tool.merge(files)
             tool.export(save_path)
             printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]")
         except Exception as e:
