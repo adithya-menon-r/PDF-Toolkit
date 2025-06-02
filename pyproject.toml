@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pdf-toolkit"
-version = "0.1.0"
+dynamic = ["version"]
 dependencies = [
   "rich>=14.0.0",
   "prompt_toolkit>=3.0.0",
@@ -25,3 +25,7 @@ Repository = "https://github.com/adithya-menon-r/PDF-Toolkit.git"
 
 [project.scripts]
 pdf-toolkit = "pdf_toolkit.main:main"
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
