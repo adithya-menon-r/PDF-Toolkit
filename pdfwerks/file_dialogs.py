@@ -41,7 +41,7 @@ def save_file_dialog():
         save_path = filedialog.asksaveasfilename(
             title="Save PDF as",
             filetypes=[("PDF Files", "*.pdf")],
-            initialfile="Merged.pdf",
+            initialfile="merged.pdf",
             defaultextension=".pdf",
             confirmoverwrite=True
         )

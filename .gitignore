@@ -5,3 +5,4 @@ build
 dist
 pdf_toolkit.egg-info
 pdfwerks.egg-info
+*.pdf

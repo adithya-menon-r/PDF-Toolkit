@@ -214,4 +214,4 @@ class ProgressBar:
                 progress.advance(task_id)
 
             progress.remove_task(task_id)
-            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.message} completed successfully!")
+            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.message} completed successfully![/bold #FFD580]")
