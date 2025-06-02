@@ -24,4 +24,4 @@ keywords = ["pdf", "toolkit", "tui", "cli", "python", "pdf-management"]
 Repository = "https://github.com/adithya-menon-r/PDF-Toolkit.git"
 
 [project.scripts]
-pdf-toolkit = "pdf_toolkit.main:main"
+pdf-toolkit = "pdf-toolkit.main:main"
