@@ -30,26 +30,23 @@ def main():
 
         if menu_choice == "Merge PDFs":
             files = get_files()
+            files = ReorderMenu(
+                "Reorder the files if required: (Use ↑/↓ to navigate, SPACE to select/unselect, ENTER to confirm)",
+                files
+            ).run()
+
+            if len(files) < 2:
+                printf(f"[red]✗[/red] [bold #FFD580] Merge Tool requires at least 2 PDFs. Only 1 was selected!\n")
+                sys.exit(1)
+
+            tool.merge(files)
+            save_path = get_save_path()
+            tool.export(save_path)
+            pyperclip.copy(save_path)
+            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n")
 
         elif menu_choice == "Exit":
             sys.exit(0)
-
-        files = ReorderMenu(
-            "Reorder the files if required: (Use ↑/↓ to navigate, SPACE to select/unselect, ENTER to confirm)",
-            files
-        ).run()
-
-        if len(files) < 2:
-            printf(f"[red]✗[/red] [bold #FFD580] Merge Tool requires at least 2 PDFs. Only 1 was selected!\n")
-            sys.exit(1)
-
-        tool.merge(files)
-
-        save_path = get_save_path()
-                
-        tool.export(save_path)
-        pyperclip.copy(save_path)
-        printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n")
 
     except KeyboardInterrupt:
         printf(f"[bold red]PDFwerks was terminated due to KeyboardInterrupt!\n")

@@ -10,35 +10,43 @@ except Exception:
     except Exception:
         pass
 
-def select_files_dialog():
+def select_files_dialog(single_file=False):
     root = tk.Tk()
     root.withdraw()
+    files = None
     try:
-        files = list(filedialog.askopenfilenames(
-            title="Select PDF Files to Merge",
-            filetypes=[("PDF Files", "*.pdf")]
-        ))
-        if not files:
-            return None
-        return files
+        if single_file:
+            file = filedialog.askopenfilename(
+                title="Select PDF File",
+                filetypes=[("PDF Files", "*.pdf")]
+            )
+            files = [file] if file else []
+        else:
+            files = list(filedialog.askopenfilenames(
+                title="Select PDF Files",
+                filetypes=[("PDF Files", "*.pdf")]
+            ))
     except Exception as e:
         print(f"Error during file selection: {e}")
-        return None
+        files = []
+    finally:
+        root.destroy()
+    return files
 
 def save_file_dialog():
     root = tk.Tk()
     root.withdraw()
+    save_path = None
     try:
-        save_dir = filedialog.asksaveasfilename(
+        save_path = filedialog.asksaveasfilename(
             title="Save PDF as",
             filetypes=[("PDF Files", "*.pdf")],
             initialfile="Merged.pdf",
             defaultextension=".pdf",
             confirmoverwrite=True
         )
-        if not save_dir:
-            return None
-        return save_dir
     except Exception as e:
         print(f"Error during save dialog: {e}")
-        return None
+    finally:
+        root.destroy()
+    return save_path if save_path else None
