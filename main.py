@@ -1,13 +1,14 @@
 import os
 import sys
 import shutil
+import pyperclip
 from rich import print as printf
 
 from pdf_tools import PDFTools
 from tui import SelectionMenu, ReorderMenu
-from file_dialogs import select_files_dialog, save_file_dialog
+from utils import get_files, get_save_path
 
-TOOL_OPTIONS = ["Merge PDFs", "Exit"]
+OPTIONS = ["Merge PDFs", "Exit"]
 
 
 def clear_screen():
@@ -25,15 +26,10 @@ def main():
         clear_screen()
         tool = PDFTools()
 
-        menu_choice = SelectionMenu("Please select one of the tools:", TOOL_OPTIONS).run()
+        menu_choice = SelectionMenu("Please select one of the tools:", OPTIONS).run()
 
         if menu_choice == "Merge PDFs":
-            while True:
-                files = select_files_dialog()
-                if files is not None:
-                    break
-                if SelectionMenu("Are you sure you want to cancel?", ["No", "Yes"]).run() == "Yes":
-                    sys.exit(1)
+            files = get_files()
 
         elif menu_choice == "Exit":
             sys.exit(0)
@@ -43,17 +39,17 @@ def main():
             files
         ).run()
 
+        if len(files) < 2:
+            printf(f"[red]✗[/red] [bold #FFD580] Merge Tool requires at least 2 PDFs. Only 1 was selected!\n")
+            sys.exit(1)
+
         tool.merge(files)
 
-        while True:
-            save_path = save_file_dialog()
-            if save_path is not None:
-                break
-            if SelectionMenu("Are you sure you want to cancel?", ["No", "Yes"]).run() == "Yes":
-                sys.exit(1)
-        
+        save_path = get_save_path()
+                
         tool.export(save_path)
-        printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580]Merged PDF saved to {save_path}")
+        pyperclip.copy(save_path)
+        printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n")
 
     except KeyboardInterrupt:
         printf(f"[bold red]PROGRAM WAS TERMINATED due to KeyboardInterrupt!\n")

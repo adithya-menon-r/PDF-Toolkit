@@ -1,7 +1,10 @@
+import logging
 from io import BytesIO
 from pathlib import Path
 from pypdf import PdfWriter
 from tui import ProgressBar
+
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 class PDFTools:
     def __init__(self):
@@ -25,7 +28,6 @@ class PDFTools:
             raise ValueError("No file to export.")
 
         export_path = Path(export_path)
-        print()
         with open(export_path, "wb") as f:
             f.write(self.generated_file.read())
         return export_path
