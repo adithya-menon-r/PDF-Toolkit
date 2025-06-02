@@ -12,7 +12,7 @@ OPTIONS = ["Merge PDFs", "Exit"]
 
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
     terminal_width = shutil.get_terminal_size((80, 20)).columns
     title = "PDFwerks"
     centered_title = title.center(terminal_width)
@@ -32,7 +32,7 @@ def run_tui():
             files = get_files()
             files = ReorderMenu(
                 "Reorder the files if required: (Use ↑/↓ to navigate, SPACE to select/unselect, ENTER to confirm)",
-                files
+                files,
             ).run()
 
             if len(files) < 2:

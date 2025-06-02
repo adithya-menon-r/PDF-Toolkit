@@ -6,6 +6,7 @@ from .tui import ProgressBar
 
 logging.getLogger("pypdf").setLevel(logging.ERROR)
 
+
 class PDFTools:
     def __init__(self):
         self.generated_file = None

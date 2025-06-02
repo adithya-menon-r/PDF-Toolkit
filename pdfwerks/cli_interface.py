@@ -57,14 +57,14 @@ def run_cli():
         prog="pdfwerks",
         description="A lightweight Python toolkit with multiple tools for PDF manipulation",
         epilog="License: MIT\nRepo: https://github.com/adithya-menon-r/PDFwerks",
-        formatter_class=argparse.RawDescriptionHelpFormatter
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
     parser.add_argument(
         "-v", "--version",
         action="version",
         version=f"%(prog)s {__version__}",
-        help="show the version number and exit"
+        help="show the version number and exit",
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)

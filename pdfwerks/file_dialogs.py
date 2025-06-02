@@ -10,6 +10,7 @@ except Exception:
     except Exception:
         pass
 
+
 def select_files_dialog(single_file=False):
     root = tk.Tk()
     root.withdraw()
@@ -33,6 +34,7 @@ def select_files_dialog(single_file=False):
         root.destroy()
     return files
 
+
 def save_file_dialog():
     root = tk.Tk()
     root.withdraw()
@@ -43,7 +45,7 @@ def save_file_dialog():
             filetypes=[("PDF Files", "*.pdf")],
             initialfile="merged.pdf",
             defaultextension=".pdf",
-            confirmoverwrite=True
+            confirmoverwrite=True,
         )
     except Exception as e:
         print(f"Error during save dialog: {e}")
