@@ -1,132 +1,14 @@
 import sys
-import argparse
-from pathlib import Path
 from rich import print as printf
-from importlib.metadata import version as get_version
 
+from .arg_parse import get_parsed_args
 from .pdf_tools import PDFTools
-
-try:
-    __version__ = get_version("pdfwerks")
-except Exception:
-    __version__ = "unknown"
-
-
-def get_default_save_path(default_file_name):
-    downloads = Path.home() / "Downloads"
-    downloads.mkdir(exist_ok=True)
-    return str(downloads / default_file_name)
-
-
-def validate_files(files, allowed_extensions):
-    invalid_files = []
-    valid_files = []
-
-    for f in files:
-        path = Path(f)
-        extension = Path(f).suffix.lower()
-        if not path.is_file():
-            invalid_files.append(f"{f} (Not found)")
-        elif extension not in allowed_extensions:
-            invalid_files.append(f"{f} (File type not supported)")
-        else:
-            valid_files.append(f)
-
-    if invalid_files:
-        printf("[bold yellow]⚠  WARNING: Some files were ignored:[/bold yellow]")
-        for msg in invalid_files:
-            printf(f"   - {msg}")
-        print()
-
-    return valid_files
-
-
-def get_unique_save_path(save_path):
-    save_path = Path(save_path)
-    if not save_path.exists():
-        return save_path
-    counter = 1
-    while True:
-        new_path = save_path.with_name(f"{save_path.stem}_{counter}{save_path.suffix}")
-        if not new_path.exists():
-            return new_path
-        counter += 1
+from .utils import validate_files, get_default_save_path, get_unique_save_path
 
 
 def run_cli():
     try:
-        parser = argparse.ArgumentParser(
-            prog="pdfwerks",
-            description="A lightweight Python toolkit with multiple tools for PDF manipulation",
-            epilog="License: MIT\nRepo: https://github.com/adithya-menon-r/PDFwerks",
-            formatter_class=argparse.RawDescriptionHelpFormatter,
-        )
-
-        parser.add_argument(
-            "-v", "--version",
-            action="version",
-            version=f"%(prog)s {__version__}",
-            help="show the version number and exit",
-        )
-
-        subparsers = parser.add_subparsers(dest="command", required=True)
-
-        merge_parser = subparsers.add_parser(
-            "merge",
-            help="Merge multiple files into one PDF (Supported: *.pdf, *.jpg, *.png, *.jpeg, *.webp, *.svg, *.txt)"
-        )
-
-        merge_parser.add_argument(
-            "files",
-            nargs="+",
-            help="Paths to input files (at least 2 required)"
-        )
-
-        merge_parser.add_argument(
-            "-o", "--output",
-            help="Optional save path. Defaults to ~/Downloads/merged.pdf"
-        )
-
-        compress_parser = subparsers.add_parser(
-            "compress",
-            help="Compress and reduce the size of a PDF file"
-        )
-
-        compress_parser.add_argument(
-            "file",
-            nargs=1,
-            help="Path to input PDF file"
-        )
-
-        compress_parser.add_argument(
-            "--level",
-            choices=["low", "medium", "high"],
-            default="medium",
-            help="Optional level of compression. Choices are: low, medium, high. Defaults to medium"
-        )
-
-        compress_parser.add_argument(
-            "-o", "--output",
-            help="Optional save path. Defaults to ~/Downloads/compressed.pdf"
-        )
-
-        convert_image_parser = subparsers.add_parser(
-            "convert_image",
-            help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg, *.webp)"
-        )
-
-        convert_image_parser.add_argument(
-            "file",
-            nargs=1,
-            help="Path to input image file"
-        )
-
-        convert_image_parser.add_argument(
-            "-o", "--output",
-            help="Optional save path. Defaults to ~/Downloads/converted.pdf"
-        )
-
-        args = parser.parse_args()
+        args = get_parsed_args()
 
         if args.command == "merge":
             files = validate_files(args.files, allowed_extensions=[".pdf", ".jpg", ".png", ".jpeg", ".webp", ".svg", ".txt"])

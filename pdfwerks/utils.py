@@ -1,4 +1,7 @@
 import sys
+from pathlib import Path
+from rich import print as printf
+
 from .tui import ConfirmationMenu
 from .file_dialogs import select_files_dialog, save_file_dialog
 
@@ -19,6 +22,47 @@ def get_save_path(default_file_name="processed.pdf", file_types=[("PDF Files", "
             return save_path
         if ConfirmationMenu("Save Path wasn't set. Are you sure you want to cancel?").run():
             sys.exit(1)
+
+
+def get_default_save_path(default_file_name):
+    downloads = Path.home() / "Downloads"
+    downloads.mkdir(exist_ok=True)
+    return str(downloads / default_file_name)
+
+
+def validate_files(files, allowed_extensions):
+    invalid_files = []
+    valid_files = []
+
+    for f in files:
+        path = Path(f)
+        extension = Path(f).suffix.lower()
+        if not path.is_file():
+            invalid_files.append(f"{f} (Not found)")
+        elif extension not in allowed_extensions:
+            invalid_files.append(f"{f} (File type not supported)")
+        else:
+            valid_files.append(f)
+
+    if invalid_files:
+        printf("[bold yellow]⚠  WARNING: Some files were ignored:[/bold yellow]")
+        for msg in invalid_files:
+            printf(f"   - {msg}")
+        print()
+
+    return valid_files
+
+
+def get_unique_save_path(save_path):
+    save_path = Path(save_path)
+    if not save_path.exists():
+        return save_path
+    counter = 1
+    while True:
+        new_path = save_path.with_name(f"{save_path.stem}_{counter}{save_path.suffix}")
+        if not new_path.exists():
+            return new_path
+        counter += 1
 
 
 def get_about_text():
