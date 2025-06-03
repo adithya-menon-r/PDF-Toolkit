@@ -1,7 +1,9 @@
 import fitz
 import logging
+from PIL import Image
 from io import BytesIO
 from pathlib import Path
+
 from .tui import ProgressBar
 
 logging.getLogger("fitz").setLevel(logging.ERROR)
@@ -14,17 +16,60 @@ class PDFTools:
     def merge(self, files):
         merged_pdf = fitz.open()
 
-        def process_merge(pdf_path):
+        def process_file(pdf_path):
             pdf = fitz.open(pdf_path)
             merged_pdf.insert_pdf(pdf)
             pdf.close()
 
         progress = ProgressBar("Merging PDFs", files)
-        progress.run(process_merge)
+        progress.run(process_file)
 
         self.generated_file = BytesIO()
         merged_pdf.save(self.generated_file)
         merged_pdf.close()
+        self.generated_file.seek(0)
+
+    def compress(self, file, level):
+        level = level.lower()
+        if level == "high":
+            image_quality = 40
+            image_resize_factor = 0.3
+        elif level == "medium":
+            image_quality = 60
+            image_resize_factor = 0.5
+        elif level == "low":
+            image_quality = 80
+            image_resize_factor = 0.8
+
+        pdf = fitz.open(file)
+
+        def process_page(page):
+            for img in page.get_images(full=True):
+                xref = img[0]
+                extracted = pdf.extract_image(xref)
+                raw = extracted["image"]
+
+                try:
+                    pil_img = Image.open(BytesIO(raw)).convert("RGB")
+                except Exception:
+                    continue
+
+                new_w = max(1, int(pil_img.width * image_resize_factor))
+                new_h = max(1, int(pil_img.height * image_resize_factor))
+                pil_img = pil_img.resize((new_w, new_h), Image.LANCZOS)
+
+                buffer = BytesIO()
+                pil_img.save(buffer, format="JPEG", quality=image_quality)
+                new_stream = buffer.getvalue()
+
+                page.replace_image(xref, stream=new_stream)
+
+        progress = ProgressBar("Compressing PDF", pdf)
+        progress.run(process_page)
+
+        self.generated_file = BytesIO()
+        pdf.save(self.generated_file, garbage=4, deflate=True, clean=True)
+        pdf.close()
         self.generated_file.seek(0)
 
     def export(self, export_path):

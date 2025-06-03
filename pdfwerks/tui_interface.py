@@ -8,7 +8,7 @@ from .pdf_tools import PDFTools
 from .tui import SelectionMenu, ReorderMenu
 from .utils import get_files, get_save_path
 
-OPTIONS = ["Merge PDFs", "Exit"]
+OPTIONS = ["Merge PDFs", "Compress PDF", "Exit"]
 
 
 def clear_screen():
@@ -26,7 +26,7 @@ def run_tui():
         clear_screen()
         tool = PDFTools()
 
-        menu_choice = SelectionMenu("Please select one of the tools:", OPTIONS).run()
+        menu_choice = SelectionMenu("Please select one of the following:", OPTIONS).run()
 
         if menu_choice == "Merge PDFs":
             files = get_files()
@@ -44,6 +44,19 @@ def run_tui():
             tool.export(save_path)
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n[/bold #FFD580]")
+        
+        elif menu_choice == "Compress PDF":
+            file = get_files(single_file=True)
+            level = SelectionMenu(
+                "Select a compression level:",
+                ["Low", "Medium", "High"],
+            ).run()
+
+            tool.compress(file[0], level)
+            save_path = get_save_path()
+            tool.export(save_path)
+            pyperclip.copy(save_path)
+            printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Compressed PDF saved!\n[/bold #FFD580]")
 
         elif menu_choice == "Exit":
             sys.exit(0)
