@@ -12,10 +12,10 @@ except Exception:
     __version__ = "unknown"
 
 
-def get_default_save_path(file_name):
+def get_default_save_path(default_file_name):
     downloads = Path.home() / "Downloads"
     downloads.mkdir(exist_ok=True)
-    return str(downloads / file_name)
+    return str(downloads / default_file_name)
 
 
 def validate_pdf_files(files):

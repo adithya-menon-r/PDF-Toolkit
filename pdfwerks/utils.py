@@ -3,18 +3,18 @@ from .tui import SelectionMenu
 from .file_dialogs import select_files_dialog, save_file_dialog
 
 
-def get_files(single_file=False):
+def get_files(single_file=False, file_types=[("PDF Files", "*.pdf")]):
     while True:
-        files = select_files_dialog(single_file)
+        files = select_files_dialog(single_file, file_types)
         if files:
             return files
         if SelectionMenu("No files were selected. Are you sure you want to cancel?", ["No", "Yes"]).run() == "Yes":
             sys.exit(1)
 
 
-def get_save_path():
+def get_save_path(default_file_name="processed.pdf", file_types=[("PDF Files", "*.pdf")]):
     while True:
-        save_path = save_file_dialog()
+        save_path = save_file_dialog(default_file_name, file_types)
         if save_path:
             return save_path
         if SelectionMenu("Save Path wasn't set. Are you sure you want to cancel?", ["No", "Yes"]).run() == "Yes":

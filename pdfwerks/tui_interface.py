@@ -40,7 +40,7 @@ def run_tui():
                 sys.exit(1)
 
             tool.merge(files)
-            save_path = get_save_path()
+            save_path = get_save_path(default_file_name="merged.pdf")
             tool.export(save_path)
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved!\n[/bold #FFD580]")
@@ -53,7 +53,7 @@ def run_tui():
             ).run()
 
             tool.compress(file[0], level)
-            save_path = get_save_path()
+            save_path = get_save_path(default_file_name="compressed.pdf")
             tool.export(save_path)
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Compressed PDF saved!\n[/bold #FFD580]")
