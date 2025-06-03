@@ -24,9 +24,9 @@ You can also use **PDFwerks** through the CLI for quick PDF operations without u
 
 #### Merge PDFs
 ```bash
-pdfwerks merge file1.pdf file2.pdf [file3.pdf ...] [-o OUTPUT]
+pdfwerks merge file1.pdf file2.jpg [file3.pdf ...] [-o OUTPUT]
 ```
-- Merge two or more PDF files into one.
+- Merge two or more files into one PDF. (Supported File Types: `*.pdf`, `*.jpg`, `*.png`, `*.jpeg`, `*.webp`, `*.svg`, `*.txt`)
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/merged.pdf` if not specified)
 
 #### Compress PDFs
@@ -36,6 +36,13 @@ pdfwerks compress file.pdf [--level LEVEL] [-o OUTPUT]
 - Compress and reduce the size of a PDF file
 - Use `--level` to choose the compression strength - `low`, `medium` (default), or `high`.
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/compressed.pdf` if not specified)
+
+#### Convert Image to PDF
+```bash
+pdfwerks convert_image file.jpg [-o OUTPUT]
+```
+- Converts any image to a PDF file (Supported File Types: `*.jpg`, `*.png`, `*.jpeg`, `*.webp`)
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/converted.pdf` if not specified)
 
 #### Help & Version
 ```bash

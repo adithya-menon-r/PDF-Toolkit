@@ -73,13 +73,13 @@ def run_cli():
 
         merge_parser = subparsers.add_parser(
             "merge",
-            help="Merge multiple PDF files into one"
+            help="Merge multiple files into one PDF (Supported: *.pdf, *.jpg, *.png, *.jpeg, *.webp, *.svg, *.txt)"
         )
 
         merge_parser.add_argument(
             "files",
             nargs="+",
-            help="Paths to input PDF files (at least 2 required)"
+            help="Paths to input files (at least 2 required)"
         )
 
         merge_parser.add_argument(
@@ -112,7 +112,7 @@ def run_cli():
 
         convert_image_parser = subparsers.add_parser(
             "convert_image",
-            help="Converts any image (*.jpg, *.png, *.jpeg, *.webp) to a PDF file"
+            help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg, *.webp)"
         )
 
         convert_image_parser.add_argument(
