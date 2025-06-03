@@ -15,10 +15,10 @@ from rich.progress import (
 
 
 class SelectionMenu:
-    def __init__(self, message, choices):
+    def __init__(self, message, choices, default_select=0):
         self.message = message
         self.choices = choices
-        self.selected_index = 0
+        self.selected_index = default_select
         self.result = None
 
         self.key_binding = KeyBindings()
