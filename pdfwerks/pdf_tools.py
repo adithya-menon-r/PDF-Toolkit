@@ -1,10 +1,10 @@
+import fitz
 import logging
 from io import BytesIO
 from pathlib import Path
-from pypdf import PdfWriter
 from .tui import ProgressBar
 
-logging.getLogger("pypdf").setLevel(logging.ERROR)
+logging.getLogger("fitz").setLevel(logging.ERROR)
 
 
 class PDFTools:
@@ -12,16 +12,19 @@ class PDFTools:
         self.generated_file = None
 
     def merge(self, files):
-        writer = PdfWriter()
+        merged_pdf = fitz.open()
 
-        def process_merge(pdf):
-            writer.append(pdf)
+        def process_merge(pdf_path):
+            pdf = fitz.open(pdf_path)
+            merged_pdf.insert_pdf(pdf)
+            pdf.close()
 
         progress = ProgressBar("Merging PDFs", files)
         progress.run(process_merge)
 
         self.generated_file = BytesIO()
-        writer.write(self.generated_file)
+        merged_pdf.save(self.generated_file)
+        merged_pdf.close()
         self.generated_file.seek(0)
 
     def export(self, export_path):

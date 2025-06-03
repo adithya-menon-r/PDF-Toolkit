@@ -49,7 +49,10 @@ def run_tui():
             sys.exit(0)
 
     except KeyboardInterrupt:
-        printf("[bold red]PDFwerks was terminated due to KeyboardInterrupt!\n[/bold red]")
+        printf("[bold red]PDFwerks was terminated by the user!\n[/bold red]")
+
+    except Exception as e:
+        printf(f"[bold red]Unexpected Error: {e}[/bold red]")
 
     finally:
         printf("[bold #A3BE8C]Goodbye![/bold #A3BE8C]")

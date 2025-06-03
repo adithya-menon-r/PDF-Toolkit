@@ -25,14 +25,14 @@ def validate_pdf_files(files):
     for f in files:
         path = Path(f)
         if not path.is_file():
-            invalid_files.append(f"{f} (Not Found)")
+            invalid_files.append(f"{f} (Not found)")
         elif not f.lower().endswith(".pdf"):
-            invalid_files.append(f"{f} (Not a Valid PDF)")
+            invalid_files.append(f"{f} (File type not supported)")
         else:
             valid_files.append(f)
 
     if invalid_files:
-        printf("[bold yellow]⚠  Warning: Some files were ignored:[/bold yellow]")
+        printf("[bold yellow]⚠  WARNING: Some files were ignored:[/bold yellow]")
         for msg in invalid_files:
             printf(f"   - {msg}")
         print()
@@ -53,55 +53,65 @@ def get_unique_save_path(save_path):
 
 
 def run_cli():
-    parser = argparse.ArgumentParser(
-        prog="pdfwerks",
-        description="A lightweight Python toolkit with multiple tools for PDF manipulation",
-        epilog="License: MIT\nRepo: https://github.com/adithya-menon-r/PDFwerks",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-    )
+    try:
+        parser = argparse.ArgumentParser(
+            prog="pdfwerks",
+            description="A lightweight Python toolkit with multiple tools for PDF manipulation",
+            epilog="License: MIT\nRepo: https://github.com/adithya-menon-r/PDFwerks",
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+        )
 
-    parser.add_argument(
-        "-v", "--version",
-        action="version",
-        version=f"%(prog)s {__version__}",
-        help="show the version number and exit",
-    )
+        parser.add_argument(
+            "-v", "--version",
+            action="version",
+            version=f"%(prog)s {__version__}",
+            help="show the version number and exit",
+        )
 
-    subparsers = parser.add_subparsers(dest="command", required=True)
+        subparsers = parser.add_subparsers(dest="command", required=True)
 
-    merge_parser = subparsers.add_parser(
-        "merge",
-        help="Merge multiple PDF files into one"
-    )
+        merge_parser = subparsers.add_parser(
+            "merge",
+            help="Merge multiple PDF files into one"
+        )
 
-    merge_parser.add_argument(
-        "input_files",
-        nargs="+",
-        help="Paths to input PDF files (at least 2 required)"
-    )
+        merge_parser.add_argument(
+            "input_files",
+            nargs="+",
+            help="Paths to input PDF files (at least 2 required)"
+        )
 
-    merge_parser.add_argument(
-        "-o", "--output",
-        help="Optional save path. Defaults to ~/Downloads/merged.pdf"
-    )
+        merge_parser.add_argument(
+            "-o", "--output",
+            help="Optional save path. Defaults to ~/Downloads/merged.pdf"
+        )
 
-    args = parser.parse_args()
+        args = parser.parse_args()
 
-    if args.command == "merge":
-        files = validate_pdf_files(args.input_files)
+        if args.command == "merge":
+            files = validate_pdf_files(args.input_files)
 
-        if len(files) < 2:
-            printf("[bold red]✗ Merge Failed: At least 2 input files are required to merge.[/bold red]")
-            sys.exit(1)
+            if len(files) < 2:
+                printf("[bold red]✗ Merge Failed: At least 2 input files are required to merge.[/bold red]")
+                sys.exit(1)
 
-        save_path = args.output or get_default_save_path()
-        save_path = get_unique_save_path(save_path)
+            save_path = args.output or get_default_save_path()
+            save_path = get_unique_save_path(save_path)
 
-        try:
-            tool = PDFTools()
-            tool.merge(files)
-            tool.export(save_path)
-            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]")
-        except Exception as e:
-            printf(f"[bold red]✗ Merge Failed: {e}[/bold red]")
-            sys.exit(1)
+            try:
+                tool = PDFTools()
+                tool.merge(files)
+                tool.export(save_path)
+                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Merged PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
+            except Exception as e:
+                printf(f"[bold red]✗ Merge Failed: {e}[/bold red]")
+                sys.exit(1)
+
+    except KeyboardInterrupt:
+        printf("[bold red]PDFwerks was terminated by the user!\n[/bold red]")
+
+    except Exception as e:
+        printf(f"[bold red]Unexpected Error: {e}[/bold red]")
+
+    finally:
+        printf("[bold #A3BE8C]Goodbye![/bold #A3BE8C]")
