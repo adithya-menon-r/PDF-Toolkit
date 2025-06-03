@@ -54,13 +54,7 @@ If you want to test, contribute or customize the tool locally:
     .venv\Scripts\activate    # On Linux/Mac: source .venv/bin/activate
     ```
 
-3. Install dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Install the package in editable mode:
+3. Install the package in editable mode:
 
     ```bash
     pip install -e .
