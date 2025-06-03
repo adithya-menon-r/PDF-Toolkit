@@ -50,7 +50,7 @@ def run_tui():
             level = SelectionMenu(
                 "Select a compression level:",
                 ["Low", "Medium", "High"],
-                default_select=1
+                default_select=1,
             ).run()
 
             tool.compress(file[0], level)

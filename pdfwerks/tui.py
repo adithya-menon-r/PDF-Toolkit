@@ -209,7 +209,7 @@ class ConfirmationMenu:
         @self.key_binding.add("c-c")
         def _exit(event):
             raise KeyboardInterrupt
-        
+
         self.msg_content = FormattedTextControl([("class:message", self.message)])
         self.msg_window = Window(
             content=self.msg_content,
@@ -228,8 +228,11 @@ class ConfirmationMenu:
                     fragments.append(("", "      "))
             return fragments
 
-
-        self.choice_window = Window(content=FormattedTextControl(get_choice_fragments), height=2, always_hide_cursor=True)
+        self.choice_window = Window(
+            content=FormattedTextControl(get_choice_fragments),
+            height=2,
+            always_hide_cursor=True,
+        )
 
         self.layout = Layout(HSplit([self.msg_window, self.choice_window]))
 

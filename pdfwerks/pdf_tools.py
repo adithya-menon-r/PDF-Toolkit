@@ -39,7 +39,7 @@ class PDFTools:
         merged_pdf.save(self.generated_file)
         merged_pdf.close()
         self.generated_file.seek(0)
-    
+
     def _image_to_pdf_stream(self, img_path):
         BORDER = 5
         A4_WIDTH = 595
@@ -50,7 +50,7 @@ class PDFTools:
         img = Image.open(img_path)
         width_px, height_px = img.size
 
-        dpi = img.info.get('dpi', (72, 72))
+        dpi = img.info.get("dpi", (72, 72))
         width_pt = width_px * 72 / dpi[0]
         height_pt = height_px * 72 / dpi[1]
 

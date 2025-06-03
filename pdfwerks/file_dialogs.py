@@ -17,16 +17,10 @@ def select_files_dialog(single_file, file_types):
     files = None
     try:
         if single_file:
-            file = filedialog.askopenfilename(
-                title="Select File",
-                filetypes=file_types
-            )
+            file = filedialog.askopenfilename(title="Select File", filetypes=file_types)
             files = [file] if file else []
         else:
-            files = list(filedialog.askopenfilenames(
-                title="Select Files",
-                filetypes=file_types
-            ))
+            files = list(filedialog.askopenfilenames(title="Select Files", filetypes=file_types))
     except Exception as e:
         print(f"Error during file selection: {e}")
         files = []
