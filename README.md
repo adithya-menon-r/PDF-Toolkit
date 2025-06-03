@@ -29,13 +29,21 @@ pdfwerks merge file1.pdf file2.pdf [file3.pdf ...] [-o OUTPUT]
 - Merge two or more PDF files into one.
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/merged.pdf` if not specified)
 
+#### Compress PDFs
+```bash
+pdfwerks compress file.pdf [--level LEVEL] [-o OUTPUT]
+```
+- Compress and reduce the size of a PDF file
+- Use `--level` to choose the compression strength - `low`, `medium` (default), or `high`.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/compressed.pdf` if not specified)
+
 #### Help & Version
 ```bash
 pdfwerks --help
 pdfwerks --version
 ```
 
-> Note: This project is still a work in progress. Currently, only the **`Merge PDFs`** tool is available. More tools and features are in the works. 
+> Note: More tools and features are in the works. 
 
 ## For Developers
 If you want to test, contribute or customize the tool locally:
