@@ -18,15 +18,16 @@ def get_default_save_path(default_file_name):
     return str(downloads / default_file_name)
 
 
-def validate_pdf_files(files):
+def validate_files(files, allowed_extensions):
     invalid_files = []
     valid_files = []
 
     for f in files:
         path = Path(f)
+        extension = Path(f).suffix.lower()
         if not path.is_file():
             invalid_files.append(f"{f} (Not found)")
-        elif not f.lower().endswith(".pdf"):
+        elif extension not in allowed_extensions:
             invalid_files.append(f"{f} (File type not supported)")
         else:
             valid_files.append(f)
@@ -109,10 +110,26 @@ def run_cli():
             help="Optional save path. Defaults to ~/Downloads/compressed.pdf"
         )
 
+        convert_image_parser = subparsers.add_parser(
+            "convert_image",
+            help="Converts any image (*.jpg, *.png, *.jpeg, *.webp) to a PDF file"
+        )
+
+        convert_image_parser.add_argument(
+            "file",
+            nargs=1,
+            help="Path to input image file"
+        )
+
+        convert_image_parser.add_argument(
+            "-o", "--output",
+            help="Optional save path. Defaults to ~/Downloads/converted.pdf"
+        )
+
         args = parser.parse_args()
 
         if args.command == "merge":
-            files = validate_pdf_files(args.files)
+            files = validate_files(args.files, allowed_extensions=[".pdf", ".jpg", ".png", ".jpeg", ".webp", ".svg", ".txt"])
 
             if len(files) < 2:
                 printf("[bold red]✗ Merge Failed: At least 2 input files are required to merge.[/bold red]")
@@ -130,7 +147,7 @@ def run_cli():
                 sys.exit(1)
 
         elif args.command == "compress":
-            files = validate_pdf_files(args.file)
+            files = validate_files(args.file, allowed_extensions=[".pdf"])
 
             if len(files) < 1:
                 printf("[bold red]✗ Compression Failed: 1 input file is required to compress.[/bold red]")
@@ -145,6 +162,24 @@ def run_cli():
                 printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Compressed PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
             except Exception as e:
                 printf(f"[bold red]✗ Compression Failed: {e}[/bold red]")
+                sys.exit(1)
+
+        elif args.command == "convert_image":
+            files = validate_files(args.file, allowed_extensions=[".jpg", ".png", ".jpeg", ".webp"])
+
+            if len(files) < 1:
+                printf("[bold red]✗ Conversion Failed: 1 input file is required to convert.[/bold red]")
+                sys.exit(1)
+
+            save_path = get_unique_save_path(args.output or get_default_save_path("converted.pdf"))
+
+            try:
+                tool = PDFTools()
+                tool.convert_img_to_pdf(files[0])
+                tool.export(save_path)
+                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Conversion done! PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
+            except Exception as e:
+                printf(f"[bold red]✗ Conversion Failed: {e}[/bold red]")
                 sys.exit(1)
 
     except KeyboardInterrupt:
