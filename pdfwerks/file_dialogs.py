@@ -18,13 +18,13 @@ def select_files_dialog(single_file, file_types):
     try:
         if single_file:
             file = filedialog.askopenfilename(
-                title="Select PDF File",
+                title="Select File",
                 filetypes=file_types
             )
             files = [file] if file else []
         else:
             files = list(filedialog.askopenfilenames(
-                title="Select PDF Files",
+                title="Select Files",
                 filetypes=file_types
             ))
     except Exception as e:
