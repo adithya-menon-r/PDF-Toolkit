@@ -12,7 +12,7 @@ dependencies = [
   "prompt_toolkit>=3.0.0",
   "pyperclip>=1.8.0"
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [{ name = "Adithya Menon R", email = "adukottan@gmail.com" }]
 description = "A lightweight Python toolkit with multiple tools for PDF manipulation"
 readme = "README.md"
