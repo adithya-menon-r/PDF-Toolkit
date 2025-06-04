@@ -27,7 +27,7 @@ pdfwerks merge file1.pdf file2.jpg [file3.pdf ...] [-o OUTPUT]
 - Merge two or more files into one PDF.
 
     !!! success "Supported File Types"
-        You can input a mix of files - including `*.pdf`, `*.jpg`, `*.png`, `*.jpeg`, `*.webp`, `*.svg`, and `*.txt`. All non-PDF files will be automatically converted to PDF before merging, so everything works seamlessly.
+        You can input a mix of files - including `*.pdf`, `*.jpg`, `*.png`, `*.jpeg` and `*.txt`. All non-PDF files will be automatically converted to PDF before merging, so everything works seamlessly.
 
     
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/merged.pdf` if not specified)
@@ -49,7 +49,7 @@ pdfwerks convert_image file.jpg [-o OUTPUT]
 - Converts any image to a PDF file
 
     !!! success "Supported File Types"
-        Image files of the folowing types `*.jpg`, `*.png`, `*.jpeg` and `*.webp` are supported for conversion.
+        Image files of the folowing types `*.jpg`, `*.png` and `*.jpeg` are supported for conversion.
 
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/converted.pdf` if not specified)
 

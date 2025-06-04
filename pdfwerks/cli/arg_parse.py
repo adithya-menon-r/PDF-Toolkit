@@ -26,7 +26,7 @@ def get_parsed_args():
 
     merge_parser = subparsers.add_parser(
         "merge",
-        help="Merge multiple files into one PDF (Supported: *.pdf, *.jpg, *.png, *.jpeg, *.webp, *.svg, *.txt)",
+        help="Merge multiple files into one PDF (Supported: *.pdf, *.jpg, *.png, *.jpeg, *.txt)",
     )
 
     merge_parser.add_argument(
@@ -65,7 +65,7 @@ def get_parsed_args():
 
     convert_image_parser = subparsers.add_parser(
         "convert_image",
-        help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg, *.webp)",
+        help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg)",
     )
 
     convert_image_parser.add_argument(

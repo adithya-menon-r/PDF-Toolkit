@@ -15,6 +15,9 @@ class PDFTools:
         self.generated_file = None
 
     def merge(self, files):
+        if not files:
+            raise ValueError("No files provided for merging")
+        
         merged_pdf = fitz.open()
 
         def process_file(file_path):
@@ -23,7 +26,7 @@ class PDFTools:
                 if extension == ".pdf":
                     with fitz.open(file_path) as pdf:
                         merged_pdf.insert_pdf(pdf)
-                elif extension in [".png", ".jpg", ".jpeg", ".webp"]:
+                elif extension in [".png", ".jpg", ".jpeg"]:
                     img_stream = self._image_to_pdf_stream(file_path)
                     with fitz.open(stream=img_stream, filetype="pdf") as img_doc:
                         merged_pdf.insert_pdf(img_doc)

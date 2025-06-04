@@ -11,7 +11,7 @@ def run_cli():
         args = get_parsed_args()
 
         if args.command == "merge":
-            files = validate_files(args.files, allowed_extensions=[".pdf", ".jpg", ".png", ".jpeg", ".webp", ".svg", ".txt"])
+            files = validate_files(args.files, allowed_extensions=[".pdf", ".jpg", ".png", ".jpeg", ".txt"])
 
             if len(files) < 2:
                 printf("[bold red]✗ Merge Failed: At least 2 input files are required to merge.[/bold red]")
@@ -47,7 +47,7 @@ def run_cli():
                 sys.exit(1)
 
         elif args.command == "convert_image":
-            files = validate_files(args.file, allowed_extensions=[".jpg", ".png", ".jpeg", ".webp"])
+            files = validate_files(args.file, allowed_extensions=[".jpg", ".png", ".jpeg"])
 
             if len(files) < 1:
                 printf("[bold red]✗ Conversion Failed: 1 input file is required to convert.[/bold red]")

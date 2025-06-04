@@ -29,7 +29,7 @@ def run_tui():
         menu_choice = SelectionMenu("Please select one of the following:", OPTIONS).run()
 
         if menu_choice == "Merge PDFs":
-            files = get_files(file_types=[("Supported Files", "*.pdf *.jpg *.png *.jpeg *.webp *.svg *.txt")])
+            files = get_files(file_types=[("Supported Files", "*.pdf *.jpg *.png *.jpeg *.txt")])
             files = ReorderMenu(
                 "Reorder the files if required: (Use ↑/↓ to navigate, SPACE to select/unselect, ENTER to confirm)",
                 files,
@@ -60,7 +60,7 @@ def run_tui():
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Compressed PDF saved!\n[/bold #FFD580]")
 
         elif menu_choice == "Convert Image to PDF":
-            file = get_files(single_file=True, file_types=[("Image Files", "*.jpg *.png *.jpeg *.webp")])
+            file = get_files(single_file=True, file_types=[("Image Files", "*.jpg *.png *.jpeg")])
             tool.convert_img_to_pdf(file[0])
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Image Converted to PDF!\n[/bold #FFD580]")
             save_path = get_save_path(default_file_name="converted.pdf")
