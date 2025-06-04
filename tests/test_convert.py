@@ -39,6 +39,9 @@ def test_convert_jpg_to_pdf(sample_jpg):
     assert tool.generated_file is not None
     with fitz.open(stream=tool.generated_file.getvalue(), filetype="pdf") as result:
         assert len(result) == 1
+        page = result[0]
+        assert page.rect.width > 0
+        assert page.rect.height > 0
 
 
 def test_convert_small_image(tmp_path):
@@ -66,7 +69,7 @@ def test_convert_large_image(tmp_path):
 def test_convert_nonexistent_image():
     tool = PDFTools()
     with pytest.raises(Exception):
-        tool.convert_img_to_pdf("nonexistent.png")
+        tool.convert_img_to_pdf("non-existent.png")
 
 
 def test_convert_invalid_image(tmp_path):

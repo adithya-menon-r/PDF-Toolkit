@@ -1,8 +1,6 @@
 import fitz
 import pytest
-from pathlib import Path
 from io import BytesIO
-import os
 from PIL import Image
 
 from pdfwerks.core.pdf_tools import PDFTools
@@ -37,7 +35,7 @@ def test_export_general(tool_with_pdf, tmp_path):
         assert "Just adding some content in Test PDF" in pdf[0].get_text()
 
 
-def test_export_no_content():
+def test_export_nothing():
     tool = PDFTools()
     with pytest.raises(ValueError, match="No file to export"):
         tool.export("test.pdf")

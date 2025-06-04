@@ -31,7 +31,7 @@ def test_validate_files(tmp_path):
     assert str(jpg_file) in valid_files
     assert str(txt_file) in valid_files
     assert str(invalid_file) not in valid_files
-    assert "nonexistent.pdf" not in valid_files
+    assert "non-existent.pdf" not in valid_files
 
 
 def test_validate_files_empty():
@@ -51,6 +51,6 @@ def test_get_unique_save_path(tmp_path):
 
 
 def test_get_unique_save_path_nonexistent(tmp_path):
-    base_path = tmp_path / "nonexistent.pdf"
+    base_path = tmp_path / "non-existent.pdf"
     unique_path = get_unique_save_path(base_path)
     assert unique_path == base_path

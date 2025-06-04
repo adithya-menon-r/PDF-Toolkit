@@ -73,6 +73,16 @@ And that's it, you're good to go! Check out the [Getting Started guide](getting-
 
     You can now make changes to the code, run tests, or build documentation without reinstalling the package.
 
+
+## Running Tests
+Once test dependencies are installed (using `pip install -e .[test]`), you run the full test suite with:
+
+```bash
+pytest
+```
+
+All test files are located in the `tests/` directory and are automatically discovered by `pytest`.
+
 ## License
 
 PDFwerks is licensed under the [MIT License](https://github.com/adithya-menon-r/PDFwerks/blob/main/LICENSE)
