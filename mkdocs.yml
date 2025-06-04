@@ -1,0 +1,56 @@
+site_name: PDFwerks
+site_url: https://adithya-menon-r.github.io
+
+repo_url: https://github.com/adithya-menon-r/pdfwerks
+repo_name: adithya-menon-r/pdfwerks
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+  font:
+    text: Roboto
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.top
+    - toc.integrate
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - header.autohide
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - def_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - stylesheets/custom.css
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md

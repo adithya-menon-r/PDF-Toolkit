@@ -5,7 +5,7 @@ PDFwerks is a lightweight yet comprehensive, tool for working with PDFs. It prov
 [![Publish PDFwerks](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml)
 ![License](https://img.shields.io/github/license/adithya-menon-r/PDFwerks)
 
-![image](https://github.com/user-attachments/assets/b1cd1797-3436-4dfb-83f0-ad70eb85e5fa)
+![PDFwerks TUI](/docs/assets/TUI-Interface.png)
 
 ## Installation
 You can install **PDFwerks** using `pip`:
@@ -78,7 +78,7 @@ If you want to test, contribute or customize the tool locally:
 You can now make changes to the code and test them without reinstalling.
 
 ## License
-This project is licensed under the [MIT LICENSE](LICENSE)
+PDFwerks is licensed under the [MIT LICENSE](LICENSE)
 
 ## Author
 PDFwerks is developed and maintained by [Adithya Menon R](https://github.com/adithya-menon-r)
