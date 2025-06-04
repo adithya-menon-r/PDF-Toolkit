@@ -2,8 +2,8 @@ import sys
 from pathlib import Path
 from rich import print as printf
 
-from .tui import ConfirmationMenu
-from .file_dialogs import select_files_dialog, save_file_dialog
+from ..tui.components import ConfirmationMenu
+from ..tui.file_dialogs import select_files_dialog, save_file_dialog
 
 
 def get_files(single_file=False, file_types=[("PDF Files", "*.pdf")]):

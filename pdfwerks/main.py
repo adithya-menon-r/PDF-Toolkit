@@ -1,7 +1,7 @@
 import sys
 
-from .cli_interface import run_cli
-from .tui_interface import run_tui
+from .cli.cli import run_cli
+from .tui.tui import run_tui
 
 def main():
     if len(sys.argv) > 1:

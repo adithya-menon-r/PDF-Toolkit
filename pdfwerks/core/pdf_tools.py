@@ -5,7 +5,7 @@ from io import BytesIO
 from pathlib import Path
 from rich import print as printf
 
-from .tui import ProgressBar
+from ..tui.components import ProgressBar
 
 logging.getLogger("fitz").setLevel(logging.ERROR)
 

@@ -2,8 +2,8 @@ import sys
 from rich import print as printf
 
 from .arg_parse import get_parsed_args
-from .pdf_tools import PDFTools
-from .utils import validate_files, get_default_save_path, get_unique_save_path
+from ..core.pdf_tools import PDFTools
+from ..core.utils import validate_files, get_default_save_path, get_unique_save_path
 
 
 def run_cli():

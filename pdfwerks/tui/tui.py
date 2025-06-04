@@ -4,9 +4,9 @@ import shutil
 import pyperclip
 from rich import print as printf
 
-from .pdf_tools import PDFTools
-from .tui import SelectionMenu, ReorderMenu
-from .utils import get_files, get_save_path, get_about_text
+from ..core.pdf_tools import PDFTools
+from .components import SelectionMenu, ReorderMenu
+from ..core.utils import get_files, get_save_path, get_about_text
 
 OPTIONS = ["Merge PDFs", "Compress PDF", "Convert Image to PDF", "About", "Exit"]
 
