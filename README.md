@@ -71,13 +71,27 @@ If you want to test, contribute or customize the tool locally:
     .venv\Scripts\activate    # On Linux/Mac: source .venv/bin/activate
     ```
 
-3. Install the package in editable mode:
+3. Install dependencies and the package in editable mode:
 
     ```bash
     pip install -e .
     ```
 
-You can now make changes to the code and test them without reinstalling.
+### Optional Dependencies
+Depending on what you are working on, you can install extras as needed:
+- For **tests**
+
+    ```bash
+    pip install -e .[test]
+    ```
+
+- For **documentation**
+
+    ```bash
+    pip install -e .[docs]
+    ```
+
+You can now make changes to the code, run tests, or build documentation without reinstalling the package.
 
 ## License
 PDFwerks is licensed under the [MIT LICENSE](LICENSE)
