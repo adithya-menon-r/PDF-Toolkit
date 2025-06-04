@@ -21,6 +21,12 @@ readme = "README.md"
 license = { file = "LICENSE" }
 keywords = ["pdfwerks", "pdf", "pdf-management", "toolkit", "tui", "cli", "python"]
 
+[project.optional-dependencies]
+docs = [
+  "mkdocs>=1.5.0",
+  "mkdocs-material>=9.5.0"
+]
+
 [project.urls]
 Repository = "https://github.com/adithya-menon-r/PDFwerks.git"
 

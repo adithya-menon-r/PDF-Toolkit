@@ -11,7 +11,7 @@ pdfwerks
 This opens the interactive TUI (Text User Interface), allowing you to visually select and execute operations.
 
 <div align="center">
-    <img src="/assets/TUI-Interface.png">
+    <img src="assets/TUI-Interface.png">
 </div>
 
 ---
