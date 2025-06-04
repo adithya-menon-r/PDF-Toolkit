@@ -6,9 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "pdfwerks"
 dynamic = ["version"]
 dependencies = [
+  "pymupdf>=1.25.0",
+  "pillow>=11.0.0",
   "rich>=10.0.0",
   "prompt_toolkit>=3.0.0",
-  "pypdf>=5.0.0",
   "pyperclip>=1.8.0"
 ]
 requires-python = ">=3.10"
@@ -19,6 +20,12 @@ description = "A lightweight Python toolkit with multiple tools for PDF manipula
 readme = "README.md"
 license = { file = "LICENSE" }
 keywords = ["pdfwerks", "pdf", "pdf-management", "toolkit", "tui", "cli", "python"]
+
+[project.optional-dependencies]
+docs = [
+  "mkdocs>=1.5.0",
+  "mkdocs-material>=9.5.0"
+]
 
 [project.urls]
 Repository = "https://github.com/adithya-menon-r/PDFwerks.git"

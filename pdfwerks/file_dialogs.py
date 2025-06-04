@@ -11,22 +11,16 @@ except Exception:
         pass
 
 
-def select_files_dialog(single_file=False):
+def select_files_dialog(single_file, file_types):
     root = tk.Tk()
     root.withdraw()
     files = None
     try:
         if single_file:
-            file = filedialog.askopenfilename(
-                title="Select PDF File",
-                filetypes=[("PDF Files", "*.pdf")]
-            )
+            file = filedialog.askopenfilename(title="Select File", filetypes=file_types)
             files = [file] if file else []
         else:
-            files = list(filedialog.askopenfilenames(
-                title="Select PDF Files",
-                filetypes=[("PDF Files", "*.pdf")]
-            ))
+            files = list(filedialog.askopenfilenames(title="Select Files", filetypes=file_types))
     except Exception as e:
         print(f"Error during file selection: {e}")
         files = []
@@ -35,15 +29,15 @@ def select_files_dialog(single_file=False):
     return files
 
 
-def save_file_dialog():
+def save_file_dialog(default_file_name, file_types):
     root = tk.Tk()
     root.withdraw()
     save_path = None
     try:
         save_path = filedialog.asksaveasfilename(
             title="Save PDF as",
-            filetypes=[("PDF Files", "*.pdf")],
-            initialfile="merged.pdf",
+            filetypes=file_types,
+            initialfile=default_file_name,
             defaultextension=".pdf",
             confirmoverwrite=True,
         )

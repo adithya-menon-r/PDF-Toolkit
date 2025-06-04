@@ -7,3 +7,4 @@ pdf_toolkit.egg-info
 pdfwerks.egg-info
 *.pdf
 *.jpg
+.ruff_cache
