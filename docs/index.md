@@ -9,6 +9,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/pdfwerks.svg)](https://pypi.org/project/pdfwerks/)
 [![Publish PDFwerks](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/publish.yaml)
 [![Deploy Docs](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/deploy.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/deploy.yaml)
+[![Run pytest](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/test.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/test.yaml)
 ![License](https://img.shields.io/github/license/adithya-menon-r/PDFwerks)
 
 ## Tools Available
