@@ -60,6 +60,80 @@ pdfwerks extract file.pdf --format [text|markdown|json] [-o OUTPUT]
 
 - Extract text from a PDF file and export it to the selected formats
 - Use `--format` to specify the export format. This is required and must be one of: `text`, `markdown`, or `json`.
+
+    ??? info "Curious about the `json` format?"
+        The exported `json` stores not only the extracted text but their positional metadata too. This is especially useful for devs working on `OCR` or `Document processing`.
+
+        **The general output format looks like:**
+        ```json
+        [
+            {
+                "width": 612.0, // Width of Page
+                "height": 792.0, // Height of Page
+
+                // Blocks are sections of text in a page like paragraphs, sections, etc.
+                "blocks": [
+                    {
+                        "number": 0, // block number of the page
+                        "type": 0,
+
+                        // Bounding Box Values
+                        "bbox": [
+                            169.18162536621094,
+                            36.8505859375,
+                            456.63177490234375,
+                            65.8974609375
+                        ],
+
+                        // A block can be divided into lines
+                        "lines": [
+                            {   
+                                // A span is a continuous seq of chars that shares the same visual properties
+                                "spans": [
+                                    {
+                                        "size": 26.0,
+                                        "flags": 16,
+                                        "bidi": 0,
+                                        "char_flags": 24,
+                                        "font": "Arial-BoldMT",
+                                        "color": 0,
+                                        "alpha": 255,
+                                        "ascender": 0.800000011920929,
+                                        "descender": -0.20000000298023224,
+                                        "text": "HEADING TEXT", // Extracted text
+                                        "origin": [
+                                            169.18162536621094,
+                                            60.3876953125
+                                        ],
+                                        "bbox": [
+                                            169.18162536621094,
+                                            36.8505859375,
+                                            456.63177490234375,
+                                            65.8974609375
+                                        ]
+                                    }
+                                ],
+                                "wmode": 0,
+                                "dir": [
+                                    1.0,
+                                    0.0
+                                ],
+                                "bbox": [
+                                    169.18162536621094,
+                                    36.8505859375,
+                                    456.63177490234375,
+                                    65.8974609375
+                                ]
+                            }
+                        ]
+                    },
+                // ... more blocks
+                ]
+            },
+            // more pages
+        ]
+        ```
+
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/extracted.[format]` if not specified)
 
 ### Help
