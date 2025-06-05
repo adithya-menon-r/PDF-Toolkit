@@ -63,6 +63,39 @@ def run_cli():
             except Exception as e:
                 printf(f"[bold red]✗ Conversion Failed: {e}[/bold red]")
                 sys.exit(1)
+        
+        elif args.command == "extract":
+            files = validate_files(args.file, allowed_extensions=[".pdf"])
+
+            if len(files) < 1:
+                printf("[bold red]✗ Extraction Failed: 1 input file is required to extract.[/bold red]")
+                sys.exit(1)
+
+            format = args.format
+            extensions = {
+                "text": "txt",
+                "markdown": "md",
+                "json": "json"
+            }
+            save_path = get_unique_save_path(args.output or get_default_save_path(f"extracted.{extensions[format]}"))
+
+            try:
+                tool = PDFTools()
+                if format == "text":
+                    tool.extract_to_text(files[0])
+                elif format == "markdown":
+                    tool.extract_to_markdown(files[0])
+                elif format == "json":
+                    tool.extract_to_json(files[0])
+                else:
+                    printf(f"[bold red]✗ Unknown format: {format}[/bold red]")
+                    sys.exit(1)
+
+                tool.export(save_path)
+                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Extracted file saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
+            except Exception as e:
+                printf(f"[bold red]✗ Extraction Failed: {e}[/bold red]")
+                sys.exit(1)
 
     except KeyboardInterrupt:
         printf("[bold red]PDFwerks was terminated by the user!\n[/bold red]")

@@ -1,5 +1,7 @@
 import fitz
+import json
 import logging
+import pymupdf4llm
 from PIL import Image
 from io import BytesIO
 from pathlib import Path
@@ -123,12 +125,56 @@ class PDFTools:
 
     def convert_img_to_pdf(self, img_path):
         self.generated_file = self._image_to_pdf_stream(img_path)
+    
+    def extract_to_plain_text(self, file):
+        pdf = fitz.open(file)
+        extracted_text = ""
+
+        def process_page(page):
+            nonlocal extracted_text
+            extracted_text += page.get_text() + "\n"
+
+        progress = ProgressBar("Extracting Text", pdf)
+        progress.run(process_page)
+
+        pdf.close()
+        self.generated_file = BytesIO()
+        self.generated_file.write(extracted_text.encode("utf-8"))
+        self.generated_file.seek(0)
+
+    def extract_to_markdown(self, file):
+        def process_file():
+            md_text = pymupdf4llm.to_markdown(file)
+            self.generated_file = BytesIO()
+            self.generated_file.write(md_text.encode("utf-8"))
+            self.generated_file.seek(0)
+        
+        progress = ProgressBar("Extracting Text", mode="simple")
+        progress.run(process_file)
+    
+    def extract_to_json(self, file):
+        pdf = fitz.open(file)
+        all_pages_json = []
+
+        def process_page(page):
+            page_json = page.get_text("json")
+            all_pages_json.append(json.loads(page_json))
+
+        progress = ProgressBar("Extracting Text", pdf)
+        progress.run(process_page)
+
+        pdf.close()
+        self.generated_file = BytesIO()
+        json_text = json.dumps(all_pages_json, indent=2)
+        self.generated_file.write(json_text.encode("utf-8"))
+        self.generated_file.seek(0)
 
     def export(self, export_path):
         if self.generated_file is None:
             raise ValueError("No file to export.")
 
         export_path = Path(export_path)
+        self.generated_file.seek(0)
         with open(export_path, "wb") as f:
             f.write(self.generated_file.read())
         return export_path

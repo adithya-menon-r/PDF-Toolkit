@@ -8,7 +8,7 @@ from ..core.pdf_tools import PDFTools
 from .components import SelectionMenu, ReorderMenu
 from ..core.utils import get_files, get_save_path, get_about_text
 
-OPTIONS = ["Merge PDFs", "Compress PDF", "Convert Image to PDF", "About", "Exit"]
+OPTIONS = ["Merge PDFs", "Compress PDF", "Convert Image to PDF", "Extract Text", "About", "Exit"]
 
 
 def clear_screen():
@@ -67,7 +67,27 @@ def run_tui():
             tool.export(save_path)
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] PDF saved!\n[/bold #FFD580]")
-
+        
+        elif menu_choice == "Extract Text":
+            file = get_files(single_file=True)
+            extract_format = SelectionMenu(
+                "Please select one of the following output formats:", 
+                ["Plain Text", "Markdown", "JSON"],
+                default_select=1
+            ).run()
+            
+            format_methods = {
+                "Plain Text": ("extract_to_plain_text", "extracted.txt", [("Text File", "*.txt")]),
+                "Markdown": ("extract_to_markdown", "extracted.md", [("Markdown File", "*.md")]),
+                "JSON": ("extract_to_json", "extracted.json", [("JSON File", "*.json")])
+            }
+            method_name, default_file_export, file_types = format_methods[extract_format]
+            getattr(tool, method_name)(file[0])
+            save_path = get_save_path(default_file_name=default_file_export, file_types=file_types)
+            tool.export(save_path)
+            pyperclip.copy(save_path)
+            printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Extracted Text saved!\n[/bold #FFD580]")
+                
         elif menu_choice == "About":
             clear_screen()
             printf(get_about_text())

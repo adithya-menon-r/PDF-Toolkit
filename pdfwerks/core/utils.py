@@ -15,7 +15,7 @@ def get_files(single_file=False, file_types=[("PDF Files", "*.pdf")]):
             sys.exit(1)
 
 
-def get_save_path(default_file_name="processed.pdf", file_types=[("PDF Files", "*.pdf")]):
+def get_save_path(default_file_name="processed.pdf", file_types=[("PDF File", "*.pdf")]):
     while True:
         save_path = save_file_dialog(default_file_name, file_types)
         if save_path:

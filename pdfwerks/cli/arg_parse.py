@@ -79,4 +79,27 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/converted.pdf"
     )
 
+    extract_parser = subparsers.add_parser(
+        "extract",
+        help="Extract text from a PDF file and export it to one of the supported formats"
+    )
+
+    extract_parser.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input PDF file"
+    )
+
+    extract_parser.add_argument(
+        "--format",
+        choices=["text", "markdown", "json"],
+        required=True,
+        help="Required export format for extracted text. Supported: text, markdown, or json.",
+    )
+
+    extract_parser.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/extracted.[format]"
+    )
+
     return parser.parse_args()
