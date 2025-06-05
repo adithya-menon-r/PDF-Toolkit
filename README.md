@@ -54,6 +54,32 @@ pdfwerks extract file.pdf --format [text|markdown|json] [-o OUTPUT]
 - Use `--format` to specify the export format. This is required and must be one of: `text`, `markdown`, or `json`.
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/extracted.[format]` if not specified)
 
+#### PDF Security
+
+##### Disable Password Protection
+```bash
+pdfwerks disable-pwd file.pdf --pwd PASSWORD [-o OUTPUT]
+```
+- Disables password protection for an encrypted PDF file
+- Use `--pwd` to specify the password for the encrypted PDF file. This is required.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/decrypted.pdf` if not specified)
+
+##### Enable Password Protection
+```bash
+pdfwerks enable-pwd file.pdf --pwd PASSWORD [-o OUTPUT]
+```
+- Enables password protection for a PDF file
+- Use `--pwd` to specify the new password for the file. This is required.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/encrypted.pdf` if not specified)
+
+##### Update PDF Password
+```bash
+pdfwerks update-pwd file.pdf --old-pwd OLD_PASSWORD --new-pwd NEW_PASSWORD [-o OUTPUT]
+```
+- Updates the password for a password protected PDF file
+- Use `--old-pwd` to specify the old password and `--new-pwd` to specify the new password for the PDF file. These are required.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/updated_pwd.pdf` if not specified)
+
 #### Help & Version
 ```bash
 pdfwerks --help

@@ -18,6 +18,7 @@
 - ✅ Compress PDFs with three adjustable compression levels  
 - ✅ Convert images to a PDF  
 - ✅ Extract text from a PDF to plain text, markdown or json 
+- ✅ PDF Security operations
 
 > _**More tools coming soon!**_
 
