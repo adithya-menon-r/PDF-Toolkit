@@ -17,6 +17,7 @@
 - ✅ Merge PDFs, images, and text files into a single PDF  
 - ✅ Compress PDFs with three adjustable compression levels  
 - ✅ Convert images to a PDF  
+- ✅ Extract text from a PDF to plain text, markdown or json 
 
 > _**More tools coming soon!**_
 

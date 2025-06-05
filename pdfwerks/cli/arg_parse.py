@@ -81,7 +81,7 @@ def get_parsed_args():
 
     extract_parser = subparsers.add_parser(
         "extract",
-        help="Extract text from a PDF file and export it to one of the supported formats"
+        help="Extract text from a PDF file and export it to the selected formats"
     )
 
     extract_parser.add_argument(

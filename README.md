@@ -46,6 +46,14 @@ pdfwerks convert_image file.jpg [-o OUTPUT]
 - Converts any image to a PDF file (Supported File Types: `*.jpg`, `*.png`, `*.jpeg`)
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/converted.pdf` if not specified)
 
+#### Extract Text
+```bash
+pdfwerks extract file.pdf --format [text|markdown|json] [-o OUTPUT]
+```
+- Extract text from a PDF file and export it to the selected formats
+- Use `--format` to specify the export format. This is required and must be one of: `text`, `markdown`, or `json`.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/extracted.[format]` if not specified)
+
 #### Help & Version
 ```bash
 pdfwerks --help
