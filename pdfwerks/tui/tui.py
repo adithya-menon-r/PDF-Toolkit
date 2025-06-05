@@ -56,8 +56,13 @@ def run_tui():
         elif menu_choice == "Compress PDF":
             file = get_files(single_file=True)
             level = SelectionMenu(
-                "Select a compression level:",
+                "Select a lossy compression level:",
                 ["Low", "Medium", "High"],
+                choice_messages=[
+                    "Quality reduction is approx. 60%",
+                    "Quality reduction is approx. 40%",
+                    "Quality reduction is approx. 20%"
+                ],
                 default_select=1,
             ).run()
 
