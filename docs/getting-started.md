@@ -138,16 +138,6 @@ pdfwerks extract file.pdf --format [text|markdown|json] [-o OUTPUT]
 
 ### PDF Security
 
-#### Disable Password Protection
-
-```bash
-pdfwerks disable-pwd file.pdf --pwd PASSWORD [-o OUTPUT]
-```
-
-- Disables password protection for an encrypted PDF file
-- Use `--pwd` to specify the password for the encrypted PDF file. This is required.
-- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/decrypted.pdf` if not specified)
-
 #### Enable Password Protection
 
 ```bash
@@ -157,6 +147,16 @@ pdfwerks enable-pwd file.pdf --pwd PASSWORD [-o OUTPUT]
 - Enables password protection for a PDF file
 - Use `--pwd` to specify the new password for the file. This is required.
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/encrypted.pdf` if not specified)
+
+#### Disable Password Protection
+
+```bash
+pdfwerks disable-pwd file.pdf --pwd PASSWORD [-o OUTPUT]
+```
+
+- Disables password protection for an encrypted PDF file
+- Use `--pwd` to specify the password for the encrypted PDF file. This is required.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/decrypted.pdf` if not specified)
 
 #### Update PDF Password
 

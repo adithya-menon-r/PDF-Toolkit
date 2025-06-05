@@ -177,24 +177,6 @@ class PDFTools:
         self.generated_file.write(json_text.encode("utf-8"))
         self.generated_file.seek(0)
     
-    def disable_pdf_encryption(self, file, pwd):
-        if not pwd:
-            raise ValueError("Password can't be empty")
-        if not self._is_pdf_encrypted(file):
-            raise ValueError("PDF is not password protected")
-
-        def process_file():
-            try:
-                with pikepdf.open(file, password=pwd) as pdf:
-                    self.generated_file = BytesIO()
-                    pdf.save(self.generated_file)
-                    self.generated_file.seek(0)
-            except pikepdf.PasswordError:
-                raise ValueError("Incorrect password or cannot decrypt PDF")
-
-        progress = ProgressBar("Disabling Password Protection", mode="simple")
-        progress.run(process_file)
-    
     def enable_pdf_encryption(self, file, pwd):
         if not pwd:
             raise ValueError("Password can't be empty")
@@ -214,6 +196,24 @@ class PDFTools:
                 raise ValueError("Failed to open PDF - requires password or is encrypted.")
         
         progress = ProgressBar("Enabling Password Protection", mode="simple")
+        progress.run(process_file)
+    
+    def disable_pdf_encryption(self, file, pwd):
+        if not pwd:
+            raise ValueError("Password can't be empty")
+        if not self._is_pdf_encrypted(file):
+            raise ValueError("PDF is not password protected")
+
+        def process_file():
+            try:
+                with pikepdf.open(file, password=pwd) as pdf:
+                    self.generated_file = BytesIO()
+                    pdf.save(self.generated_file)
+                    self.generated_file.seek(0)
+            except pikepdf.PasswordError:
+                raise ValueError("Incorrect password or cannot decrypt PDF")
+
+        progress = ProgressBar("Disabling Password Protection", mode="simple")
         progress.run(process_file)
 
     def update_pdf_password(self, file, old_pwd, new_pwd):

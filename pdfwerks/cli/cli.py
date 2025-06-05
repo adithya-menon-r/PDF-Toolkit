@@ -96,24 +96,6 @@ def run_cli():
             except Exception as e:
                 printf(f"[bold red]✗ Extraction Failed: {e}[/bold red]")
                 sys.exit(1)
-                
-        elif args.command == "disable-pwd":
-            files = validate_files(args.file, allowed_extensions=[".pdf"])
-
-            if len(files) < 1:
-                printf("[bold red]✗ Disabling Password Protection Failed: 1 input file is required.[/bold red]")
-                sys.exit(1)
-
-            save_path = get_unique_save_path(args.output or get_default_save_path("decrypted.pdf"))
-
-            try:
-                tool = PDFTools()
-                tool.disable_pdf_encryption(files[0], args.pwd)
-                tool.export(save_path)
-                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Decrypted PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
-            except Exception as e:
-                printf(f"[bold red]✗ Decryption Failed: {e}[/bold red]")
-                sys.exit(1)
 
         elif args.command == "enable-pwd":
             files = validate_files(args.file, allowed_extensions=[".pdf"])
@@ -131,6 +113,24 @@ def run_cli():
                 printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Encrypted PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
             except Exception as e:
                 printf(f"[bold red]✗ Encryption Failed: {e}[/bold red]")
+                sys.exit(1)
+                
+        elif args.command == "disable-pwd":
+            files = validate_files(args.file, allowed_extensions=[".pdf"])
+
+            if len(files) < 1:
+                printf("[bold red]✗ Disabling Password Protection Failed: 1 input file is required.[/bold red]")
+                sys.exit(1)
+
+            save_path = get_unique_save_path(args.output or get_default_save_path("decrypted.pdf"))
+
+            try:
+                tool = PDFTools()
+                tool.disable_pdf_encryption(files[0], args.pwd)
+                tool.export(save_path)
+                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Decrypted PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
+            except Exception as e:
+                printf(f"[bold red]✗ Decryption Failed: {e}[/bold red]")
                 sys.exit(1)
 
         elif args.command == "update-pwd":

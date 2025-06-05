@@ -110,15 +110,16 @@ def run_tui():
             file = get_files(single_file=True)
             pwd_operation = SelectionMenu(
                 "Select one of the following operations:",
-                ["Disable Password Protection", "Enable Password Protection", "Update PDF Password"],
+                ["Enable Password Protection", "Disable Password Protection", "Update PDF Password"],
+                default_select=1
             ).run()
 
-            if pwd_operation == "Disable Password Protection":
-                pwd = inputf("Enter the password to the PDF:")
-                tool.disable_pdf_encryption(file[0], pwd)
-            elif pwd_operation == "Enable Password Protection":
+            if pwd_operation == "Enable Password Protection":
                 pwd = inputf("Enter a password for the PDF:")
                 tool.enable_pdf_encryption(file[0], pwd)
+            elif pwd_operation == "Disable Password Protection":
+                pwd = inputf("Enter the password to the PDF:")
+                tool.disable_pdf_encryption(file[0], pwd)
             elif pwd_operation == "Update PDF Password":
                 old_pwd = inputf("Enter the old password for the PDF:")
                 new_pwd = inputf("Enter the new password for the PDF:")

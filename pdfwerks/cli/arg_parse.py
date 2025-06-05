@@ -24,6 +24,7 @@ def get_parsed_args():
 
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    # Merge Command ------------------------------------------------------------------
     merge_parser = subparsers.add_parser(
         "merge",
         help="Merge multiple files into one PDF (Supported: *.pdf, *.jpg, *.png, *.jpeg, *.txt)",
@@ -40,6 +41,7 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/merged.pdf"
     )
 
+    # Compress Command ------------------------------------------------------------------
     compress_parser = subparsers.add_parser(
         "compress",
         help="Compress and reduce the size of a PDF file"
@@ -63,6 +65,7 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/compressed.pdf"
     )
 
+    # Convert Image to PDF Command ------------------------------------------------------------------
     convert_image_parser = subparsers.add_parser(
         "convert-image",
         help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg)",
@@ -79,6 +82,7 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/converted.pdf"
     )
 
+    # Text Extraction Command ------------------------------------------------------------------
     extract_parser = subparsers.add_parser(
         "extract",
         help="Extract text from a PDF file and export it to the selected formats"
@@ -102,28 +106,7 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/extracted.[format]"
     )
 
-    disable_pwd = subparsers.add_parser(
-        "disable-pwd",
-        help="Disables password protection for an encrypted PDF file"
-    )
-
-    disable_pwd.add_argument(
-        "file",
-        nargs=1,
-        help="Path to input encrypted PDF file"
-    )
-
-    disable_pwd.add_argument(
-        "--pwd",
-        required=True,
-        help="Required password for the encrypted PDF file",
-    )
-
-    disable_pwd.add_argument(
-        "-o", "--output",
-        help="Optional save path. Defaults to ~/Downloads/decrypted.pdf"
-    )
-
+    # PDF Security - Enable Pwd Command ------------------------------------------------------------------
     enable_pwd = subparsers.add_parser(
         "enable-pwd",
         help="Enables password protection for a PDF file"
@@ -146,6 +129,30 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/encrypted.pdf"
     )
 
+    # PDF Security - Disable Pwd Command ------------------------------------------------------------------
+    disable_pwd = subparsers.add_parser(
+        "disable-pwd",
+        help="Disables password protection for an encrypted PDF file"
+    )
+
+    disable_pwd.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input encrypted PDF file"
+    )
+
+    disable_pwd.add_argument(
+        "--pwd",
+        required=True,
+        help="Required password for the encrypted PDF file",
+    )
+
+    disable_pwd.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/decrypted.pdf"
+    )
+
+    # PDF Security - Update Pwd Command ------------------------------------------------------------------
     update_pwd = subparsers.add_parser(
         "update-pwd",
         help="Updates the password for a password protected PDF file"
