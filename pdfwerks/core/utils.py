@@ -83,3 +83,10 @@ def get_about_text():
         "",
         "[bold #FFAA66]Author:[/bold #FFAA66] Adithya Menon R\n",
     ])
+
+
+def inputf(print_msg):
+    printf(f"[#FFD580]{print_msg} [/#FFD580]", end="")
+    value = input()
+    print()
+    return value

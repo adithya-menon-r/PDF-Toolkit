@@ -64,7 +64,7 @@ def get_parsed_args():
     )
 
     convert_image_parser = subparsers.add_parser(
-        "convert_image",
+        "convert-image",
         help="Converts any image to a PDF file (Supported: *.jpg, *.png, *.jpeg)",
     )
 
@@ -100,6 +100,78 @@ def get_parsed_args():
     extract_parser.add_argument(
         "-o", "--output",
         help="Optional save path. Defaults to ~/Downloads/extracted.[format]"
+    )
+
+    disable_pwd = subparsers.add_parser(
+        "disable-pwd",
+        help="Disables password protection for an encrypted PDF file"
+    )
+
+    disable_pwd.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input encrypted PDF file"
+    )
+
+    disable_pwd.add_argument(
+        "--pwd",
+        required=True,
+        help="Required password for the encrypted PDF file",
+    )
+
+    disable_pwd.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/decrypted.pdf"
+    )
+
+    enable_pwd = subparsers.add_parser(
+        "enable-pwd",
+        help="Enables password protection for a PDF file"
+    )
+
+    enable_pwd.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input PDF file"
+    )
+
+    enable_pwd.add_argument(
+        "--pwd",
+        required=True,
+        help="Required new password for the PDF file",
+    )
+
+    enable_pwd.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/encrypted.pdf"
+    )
+
+    update_pwd = subparsers.add_parser(
+        "update-pwd",
+        help="Updates the password for a password protected PDF file"
+    )
+
+    update_pwd.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input password protected PDF file"
+    )
+
+    update_pwd.add_argument(
+        "--old-pwd",
+        required=True,
+        help="Required old password for the PDF file",
+    )
+
+    update_pwd.add_argument(
+        "--new-pwd",
+        required=True,
+        help="Required new password for the PDF file",
+    )
+
+    update_pwd.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/updated_pwd.pdf"
     )
 
     return parser.parse_args()

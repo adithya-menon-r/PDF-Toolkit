@@ -1,6 +1,7 @@
 import fitz
 import json
 import logging
+import pikepdf
 import pymupdf4llm
 from PIL import Image
 from io import BytesIO
@@ -15,36 +16,16 @@ logging.getLogger("fitz").setLevel(logging.ERROR)
 class PDFTools:
     def __init__(self):
         self.generated_file = None
-
-    def merge(self, files):
-        if not files:
-            raise ValueError("No files provided for merging")
-        
-        merged_pdf = fitz.open()
-
-        def process_file(file_path):
-            extension = Path(file_path).suffix.lower()
-            try:
-                if extension == ".pdf":
-                    with fitz.open(file_path) as pdf:
-                        merged_pdf.insert_pdf(pdf)
-                elif extension in [".png", ".jpg", ".jpeg"]:
-                    img_stream = self._image_to_pdf_stream(file_path)
-                    with fitz.open(stream=img_stream, filetype="pdf") as img_doc:
-                        merged_pdf.insert_pdf(img_doc)
-                else:
-                    merged_pdf.insert_file(file_path)
-            except Exception as e:
-                printf(f"[bold yellow]  - Skipping {file_path}: {e!r}[/bold yellow]")
-
-        progress = ProgressBar("Merging PDFs", files)
-        progress.run(process_file)
-
-        self.generated_file = BytesIO()
-        merged_pdf.save(self.generated_file)
-        merged_pdf.close()
-        self.generated_file.seek(0)
-
+    
+    def _is_pdf_encrypted(self, file):
+        try:
+            with pikepdf.open(file):
+                return False
+        except pikepdf.PasswordError:
+            return True
+        except Exception as e:
+            raise RuntimeError(f"Failed to open PDF: {e}")
+    
     def _image_to_pdf_stream(self, img_path):
         BORDER = 5
         A4_WIDTH = 595
@@ -79,6 +60,34 @@ class PDFTools:
         pdf.close()
         pdf_buffer.seek(0)
         return pdf_buffer
+
+    def merge(self, files):
+        if not files:
+            raise ValueError("No files provided for merging")
+        
+        merged_pdf = fitz.open()
+
+        def process_file(file_path):
+            extension = Path(file_path).suffix.lower()
+            try:
+                if extension == ".pdf":
+                    with fitz.open(file_path) as pdf:
+                        merged_pdf.insert_pdf(pdf)
+                elif extension in [".png", ".jpg", ".jpeg"]:
+                    img_stream = self._image_to_pdf_stream(file_path)
+                    with fitz.open(stream=img_stream, filetype="pdf") as img_doc:
+                        merged_pdf.insert_pdf(img_doc)
+                else:
+                    merged_pdf.insert_file(file_path)
+            except Exception as e:
+                printf(f"[bold yellow]  - Skipping {file_path}: {e!r}[/bold yellow]")
+
+        progress = ProgressBar("Merging PDFs", files)
+        progress.run(process_file)
+        self.generated_file = BytesIO()
+        merged_pdf.save(self.generated_file)
+        merged_pdf.close()
+        self.generated_file.seek(0)
 
     def compress(self, file, level):
         level = level.lower()
@@ -117,7 +126,6 @@ class PDFTools:
 
         progress = ProgressBar("Compressing PDF", pdf)
         progress.run(process_page)
-
         self.generated_file = BytesIO()
         pdf.save(self.generated_file, garbage=4, deflate=True, clean=True)
         pdf.close()
@@ -168,11 +176,50 @@ class PDFTools:
         json_text = json.dumps(all_pages_json, indent=2)
         self.generated_file.write(json_text.encode("utf-8"))
         self.generated_file.seek(0)
+    
+    def disable_pdf_encryption(self, file, pwd):
+        if not self._is_pdf_encrypted(file):
+            raise ValueError("PDF is not password protected")
+
+        def process_file():
+            try:
+                with pikepdf.open(file, password=pwd) as pdf:
+                    self.generated_file = BytesIO()
+                    pdf.save(self.generated_file)
+                    self.generated_file.seek(0)
+            except pikepdf.PasswordError:
+                raise ValueError("Incorrect password or cannot decrypt PDF")
+
+        progress = ProgressBar("Disabling Password Protection", mode="simple")
+        progress.run(process_file)
+    
+    def enable_pdf_encryption(self, file, pwd):
+        if self._is_pdf_encrypted(file):
+            raise ValueError("PDF is already password protected")
+
+        def process_file():
+            try:
+                with pikepdf.open(file) as pdf:
+                    self.generated_file = BytesIO()
+                    pdf.save(
+                        self.generated_file,
+                        encryption=pikepdf.Encryption(user=pwd, owner=pwd, R=4)
+                    )
+                    self.generated_file.seek(0)
+            except pikepdf.PasswordError:
+                raise ValueError("Failed to open PDF - requires password or is encrypted.")
+        
+        progress = ProgressBar("Enabling Password Protection", mode="simple")
+        progress.run(process_file)
+
+    def update_pdf_password(self, file, old_pwd, new_pwd):
+        self.disable_pdf_encryption(file, old_pwd)
+        self.generated_file.seek(0)
+        self.enable_pdf_encryption(self.generated_file, new_pwd)
 
     def export(self, export_path):
         if self.generated_file is None:
             raise ValueError("No file to export.")
-
         export_path = Path(export_path)
         self.generated_file.seek(0)
         with open(export_path, "wb") as f:

@@ -41,7 +41,7 @@ pdfwerks compress file.pdf [--level LEVEL] [-o OUTPUT]
 
 #### Convert Image to PDF
 ```bash
-pdfwerks convert_image file.jpg [-o OUTPUT]
+pdfwerks convert-image file.jpg [-o OUTPUT]
 ```
 - Converts any image to a PDF file (Supported File Types: `*.jpg`, `*.png`, `*.jpeg`)
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/converted.pdf` if not specified)

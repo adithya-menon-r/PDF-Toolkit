@@ -6,9 +6,17 @@ from rich import print as printf
 
 from ..core.pdf_tools import PDFTools
 from .components import SelectionMenu, ReorderMenu
-from ..core.utils import get_files, get_save_path, get_about_text
+from ..core.utils import get_files, get_save_path, get_about_text, inputf
 
-OPTIONS = ["Merge PDFs", "Compress PDF", "Convert Image to PDF", "Extract Text", "About", "Exit"]
+OPTIONS = [
+    "Merge PDFs",
+    "Compress PDF",
+    "Convert Image to PDF",
+    "Extract Text",
+    "PDF Security",
+    "About",
+    "Exit"
+]
 
 
 def clear_screen():
@@ -71,7 +79,7 @@ def run_tui():
         elif menu_choice == "Extract Text":
             file = get_files(single_file=True)
             extract_format = SelectionMenu(
-                "Please select one of the following output formats:", 
+                "Select one of the following output formats:", 
                 ["Plain Text", "Markdown", "JSON"],
                 choice_messages=[
                     "Extracts raw unformatted text without preserving layout",
@@ -93,6 +101,29 @@ def run_tui():
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Extracted Text saved!\n[/bold #FFD580]")
                 
+        elif menu_choice == "PDF Security":
+            file = get_files(single_file=True)
+            pwd_operation = SelectionMenu(
+                "Select one of the following operations:",
+                ["Disable Password Protection", "Enable Password Protection", "Update PDF Password"],
+            ).run()
+
+            if pwd_operation == "Disable Password Protection":
+                pwd = inputf("Enter the password to the PDF:")
+                tool.disable_pdf_encryption(file[0], pwd)
+            elif pwd_operation == "Enable Password Protection":
+                pwd = inputf("Enter a password for the PDF:")
+                tool.enable_pdf_encryption(file[0], pwd)
+            elif pwd_operation == "Update PDF Password":
+                old_pwd = inputf("Enter the old password for the PDF:")
+                new_pwd = inputf("Enter the new password for the PDF:")
+                tool.update_pdf_password(file[0], old_pwd, new_pwd)
+
+            save_path = get_save_path(default_file_name="processed.pdf")
+            tool.export(save_path)
+            pyperclip.copy(save_path)
+            printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Processed File Saved!\n[/bold #FFD580]")
+
         elif menu_choice == "About":
             clear_screen()
             printf(get_about_text())
