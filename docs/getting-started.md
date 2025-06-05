@@ -130,7 +130,7 @@ pdfwerks extract file.pdf --format [text|markdown|json] [-o OUTPUT]
                 // ... more blocks
                 ]
             },
-            // more pages
+            // ... more pages
         ]
         ```
 

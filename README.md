@@ -9,6 +9,9 @@ PDFwerks is a lightweight yet comprehensive, tool for working with PDFs. It prov
 
 ![PDFwerks TUI](/docs/assets/TUI-Interface.png)
 
+## Documentation
+Check out the `official documentation` here: [PDFwerks Documentation](https://adithya-menon-r.github.io/PDFwerks). It's more detailed and well I put a lot of effort, so go see it :)
+
 ## Installation
 You can install **PDFwerks** using `pip`:
 ```bash
