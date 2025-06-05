@@ -178,6 +178,8 @@ class PDFTools:
         self.generated_file.seek(0)
     
     def disable_pdf_encryption(self, file, pwd):
+        if not pwd:
+            raise ValueError("Password can't be empty")
         if not self._is_pdf_encrypted(file):
             raise ValueError("PDF is not password protected")
 
@@ -194,6 +196,8 @@ class PDFTools:
         progress.run(process_file)
     
     def enable_pdf_encryption(self, file, pwd):
+        if not pwd:
+            raise ValueError("Password can't be empty")
         if self._is_pdf_encrypted(file):
             raise ValueError("PDF is already password protected")
 
@@ -213,6 +217,8 @@ class PDFTools:
         progress.run(process_file)
 
     def update_pdf_password(self, file, old_pwd, new_pwd):
+        if not old_pwd or not new_pwd:
+            raise ValueError("Password can't be empty")
         self.disable_pdf_encryption(file, old_pwd)
         self.generated_file.seek(0)
         self.enable_pdf_encryption(self.generated_file, new_pwd)
