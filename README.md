@@ -110,6 +110,9 @@ pytest
 
 All test files are located in the `tests/` directory and are automatically discovered by `pytest`.
 
+## Cross Platform Support
+**PDFwerks** has been locally tested on `Windows` and `Ubuntu (WSL 2)`, so it’s solid on those platforms. The Continuous Integration tests run on `Windows`, `macOS`, and `Ubuntu` covering the core features to ensure it works well across all major OSes. Please feel free to reach out if you face any issues!
+
 ## License
 PDFwerks is licensed under the [MIT LICENSE](LICENSE)
 

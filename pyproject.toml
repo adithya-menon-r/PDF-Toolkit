@@ -19,6 +19,17 @@ description = "A lightweight Python toolkit with multiple tools for PDF manipula
 readme = "README.md"
 license = { file = "LICENSE" }
 keywords = ["pdfwerks", "pdf", "pdf-management", "toolkit", "tui", "cli", "python"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
 [project.optional-dependencies]
 docs = ["mkdocs>=1.5.0", "mkdocs-material>=9.5.0"]
