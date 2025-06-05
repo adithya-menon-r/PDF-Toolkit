@@ -12,6 +12,13 @@ PDFwerks is a lightweight yet comprehensive, tool for working with PDFs. It prov
 ## Documentation
 Check out the `official documentation` here: [PDFwerks Documentation](https://adithya-menon-r.github.io/PDFwerks). It's more detailed and well I put a lot of effort, so go see it :)
 
+## Cross Platform Support
+**PDFwerks** is a cross platform PDF toolkit and works across all major operating systems.
+
+It has been **locally tested and verified on both Ubuntu (including WSL2) and Windows**. Additionally, **Continuous Integration (CI) tests are run on Windows, macOS, and Ubuntu**, ensuring core functionality remains stable across environments.
+
+> ⚠️ **Important:** `tkinter` is a required dependency for PDFwerks. For OS specific installation instructions, see the [PDFwerks Documentation](https://adithya-menon-r.github.io/PDFwerks)
+
 ## Installation
 You can install **PDFwerks** using `pip`:
 ```bash
@@ -138,9 +145,6 @@ pytest
 ```
 
 All test files are located in the `tests/` directory and are automatically discovered by `pytest`.
-
-## Cross Platform Support
-**PDFwerks** has been locally tested on `Windows` and `Ubuntu (WSL 2)`, so it’s solid on those platforms. The Continuous Integration tests run on `Windows`, `macOS`, and `Ubuntu` covering the core features to ensure it works well across all major OSes. Please feel free to reach out if you face any issues!
 
 ## License
 PDFwerks is licensed under the [MIT LICENSE](LICENSE)

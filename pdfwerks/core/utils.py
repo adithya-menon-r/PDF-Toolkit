@@ -81,6 +81,7 @@ def get_about_text():
         "[bold #FFAA66]Developers & Contributions:[/bold #FFAA66]",
         "PDFwerks is open source and welcomes contributions!",
         "Repo: [link=https://github.com/adithya-menon-r/PDFwerks]adithya-menon-r/PDFwerks[/link]",
+        "Docs: [link=https://adithya-menon-r.github.io/PDFwerks/]PDFwerks Documentation[/link]",
         "",
         "[bold #FFAA66]Author:[/bold #FFAA66] Adithya Menon R\n",
     ])
