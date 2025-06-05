@@ -73,6 +73,11 @@ def run_tui():
             extract_format = SelectionMenu(
                 "Please select one of the following output formats:", 
                 ["Plain Text", "Markdown", "JSON"],
+                choice_messages=[
+                    "Extracts raw unformatted text without preserving layout",
+                    "Extracts text to markdown (.md) format (experimental)",
+                    "Extracts text along with positional metadata"
+                ],
                 default_select=1
             ).run()
             

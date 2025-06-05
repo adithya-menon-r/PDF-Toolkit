@@ -7,9 +7,10 @@ from prompt_toolkit.layout.controls import FormattedTextControl
 
 
 class SelectionMenu:
-    def __init__(self, message, choices, default_select=0):
-        self.message = message
+    def __init__(self, instruction, choices, choice_messages=None, default_select=0):
+        self.instruction = instruction
         self.choices = choices
+        self.choice_messages = choice_messages or []
         self.selected_index = default_select
         self.result = None
 
@@ -38,9 +39,9 @@ class SelectionMenu:
         def _exit(event):
             raise KeyboardInterrupt
 
-        self.msg_content = FormattedTextControl([("class:message", self.message)])
-        self.msg_window = Window(
-            content=self.msg_content,
+        self.instr_content = FormattedTextControl([("class:instruction", self.instruction)])
+        self.instr_window = Window(
+            content=self.instr_content,
             height=1,
             always_hide_cursor=True
         )
@@ -50,7 +51,11 @@ class SelectionMenu:
             for i, choice in enumerate(self.choices):
                 if i == self.selected_index:
                     fragments.append(("class:arrow", "> "))
-                    fragments.append(("class:selected", f" {choice} \n"))
+                    fragments.append(("class:selected", f" {choice} "))
+                    if choice_messages:
+                        fragments.append(("class:message", f" : {choice_messages[i]}\n"))
+                    else:
+                        fragments.append(("", "\n"))
                 else:
                     fragments.append(("", f"  {choice} \n"))
             return fragments
@@ -58,14 +63,15 @@ class SelectionMenu:
         self.menu_content = FormattedTextControl(get_menu_fragments)
         self.menu_window = Window(content=self.menu_content, always_hide_cursor=True)
 
-        container = HSplit([self.msg_window, self.menu_window])
+        container = HSplit([self.instr_window, self.menu_window])
 
         self.layout = Layout(container, focused_element=self.menu_window)
 
         self.style = Style.from_dict({
-            "message": "bold #FFD580",
+            "instruction": "bold #FFD580",
             "arrow": "bold #FFAA66",
             "selected": "bold #FFECB3 bg:black",
+            "message": "italic #444444"
         })
 
     def run(self):

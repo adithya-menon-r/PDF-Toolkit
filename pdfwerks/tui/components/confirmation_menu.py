@@ -7,8 +7,8 @@ from prompt_toolkit.layout.controls import FormattedTextControl
 
 
 class ConfirmationMenu:
-    def __init__(self, message):
-        self.message = message
+    def __init__(self, instruction):
+        self.instruction = instruction
         self.choices = ["No", "Yes"]
         self.selected_index = 0
         self.result = None
@@ -32,9 +32,9 @@ class ConfirmationMenu:
         def _exit(event):
             raise KeyboardInterrupt
 
-        self.msg_content = FormattedTextControl([("class:message", self.message)])
-        self.msg_window = Window(
-            content=self.msg_content,
+        self.instr_content = FormattedTextControl([("class:instruction", self.instruction)])
+        self.instr_window = Window(
+            content=self.instr_content,
             height=1,
             always_hide_cursor=True,
         )
@@ -56,10 +56,10 @@ class ConfirmationMenu:
             always_hide_cursor=True,
         )
 
-        self.layout = Layout(HSplit([self.msg_window, self.choice_window]))
+        self.layout = Layout(HSplit([self.instr_window, self.choice_window]))
 
         self.style = Style.from_dict({
-            "message": "bold #FFD580",
+            "instruction": "bold #FFD580",
             "selected": "bold #FFECB3 bg:black",
         })
 

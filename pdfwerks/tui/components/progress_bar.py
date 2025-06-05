@@ -9,8 +9,8 @@ from rich.progress import (
 
 
 class ProgressBar:
-    def __init__(self, message, tasks=None, mode="full"):
-        self.message = message
+    def __init__(self, task_description, tasks=None, mode="full"):
+        self.task_description = task_description
         self.tasks = tasks or []
         self.mode = mode
 
@@ -30,13 +30,13 @@ class ProgressBar:
             TextColumn("[#FFECB3]{task.percentage:>5.1f}%"),
             TimeElapsedColumn(),
         ) as progress:
-            task_id = progress.add_task(self.message, total=len(self.tasks))
+            task_id = progress.add_task(self.task_description, total=len(self.tasks))
             for task in self.tasks:
                 work_function(task)
                 progress.advance(task_id)
 
             progress.remove_task(task_id)
-            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.message} completed successfully![/bold #FFD580]")
+            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.task_description} completed successfully![/bold #FFD580]")
 
     def _run_simple(self, work_function):
         with Progress(
@@ -44,7 +44,7 @@ class ProgressBar:
             TextColumn("[bold #FFD580]{task.description}"),
             TimeElapsedColumn(),
         ) as progress:
-            task_id = progress.add_task(self.message, total=len(self.tasks))
+            task_id = progress.add_task(self.task_description, total=len(self.tasks))
             work_function()
             progress.remove_task(task_id)
-            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.message} completed successfully![/bold #FFD580]")
+            printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] {self.task_description} completed successfully![/bold #FFD580]")

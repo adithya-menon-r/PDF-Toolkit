@@ -7,8 +7,8 @@ from prompt_toolkit.layout.controls import FormattedTextControl
 
 
 class ReorderMenu:
-    def __init__(self, message, items):
-        self.message = message
+    def __init__(self, instruction, items):
+        self.instruction = instruction
         self.items = list(items)
         self.cursor_index = 0
         self.selected_index = None
@@ -59,9 +59,9 @@ class ReorderMenu:
         def _exit(event):
             raise KeyboardInterrupt
 
-        self.msg_content = FormattedTextControl([("class:message", self.message)])
-        self.msg_window = Window(
-            content=self.msg_content,
+        self.instr_content = FormattedTextControl([("class:instruction", self.instruction)])
+        self.instr_window = Window(
+            content=self.instr_content,
             height=1,
             always_hide_cursor=True
         )
@@ -83,12 +83,12 @@ class ReorderMenu:
         self.menu_content = FormattedTextControl(get_menu_fragments)
         self.menu_window = Window(content=self.menu_content, always_hide_cursor=True)
 
-        container = HSplit([self.msg_window, self.menu_window])
+        container = HSplit([self.instr_window, self.menu_window])
 
         self.layout = Layout(container, focused_element=self.menu_window)
 
         self.style = Style.from_dict({
-            "message": "bold #FFD580",
+            "instruction": "bold #FFD580",
             "arrow": "bold #FFAA66",
             "selected": "bold #FFECB3 bg:black",
             "moving_arrow": "#FFAA66",
