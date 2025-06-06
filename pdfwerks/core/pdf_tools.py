@@ -224,9 +224,17 @@ class PDFTools:
         self.enable_pdf_encryption(self.generated_file, new_pwd)
     
     def delete_pages(self, file, pages):
+        if not pages:
+            raise ValueError("No pages specified for deletion")
+        
         pdf = fitz.open(file)
         pages = sorted(pages, reverse=True)
-
+        if len(pages) == len(pdf):
+            raise ValueError("Cannot delete all pages")
+        for page in pages:
+            if page < 0 or page >= len(pdf):
+                raise ValueError("Page index out of range")
+            
         def process_file(index):
             pdf.delete_page(index)
         

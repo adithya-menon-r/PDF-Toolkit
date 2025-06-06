@@ -114,7 +114,7 @@ def parse_page_ranges(pages_input, file):
         end = int(match.group(2)) - 1 if match.group(2) else start
 
         if start < 0 or end < 0:
-            raise ValueError(f"Page numbers must be >= 1")
+            raise ValueError("Page numbers must be >= 1")
         if start >= max_page:
             raise ValueError(f"Page number out of bounds: {start+1}")
         if end >= max_page:

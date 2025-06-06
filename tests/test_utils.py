@@ -1,6 +1,25 @@
+import fitz
+import pytest
 from pathlib import Path
 
-from pdfwerks.core.utils import get_default_save_path, validate_files, get_unique_save_path
+from pdfwerks.core.utils import (
+    get_default_save_path,
+    validate_files,
+    get_unique_save_path,
+    parse_page_ranges,
+    format_page_ranges
+)
+
+
+def create_test_pdf(tmp_path, num_pages):
+    pdf_path = tmp_path / "test.pdf"
+    pdf = fitz.open()
+    for i in range(num_pages):
+        page = pdf.new_page()
+        page.insert_text((50, 50), f"Page {i+1}")
+    pdf.save(str(pdf_path))
+    pdf.close()
+    return pdf_path
 
 
 def test_get_default_save_path():
@@ -54,3 +73,47 @@ def test_get_unique_save_path_nonexistent(tmp_path):
     base_path = tmp_path / "non-existent.pdf"
     unique_path = get_unique_save_path(base_path)
     assert unique_path == base_path
+
+
+def test_parse_page_ranges(tmp_path):
+    pdf_path = create_test_pdf(tmp_path, 10)
+    
+    pages = parse_page_ranges("1", str(pdf_path))
+    assert pages == {0}
+
+    pages = parse_page_ranges("1-5", str(pdf_path))
+    assert pages == {0, 1, 2, 3, 4}
+    
+    pages = parse_page_ranges("1,3,5-7", str(pdf_path))
+    assert pages == {0, 2, 4, 5, 6}
+    
+    pages = parse_page_ranges("1, ,, 3, 5 -  7", str(pdf_path))
+    assert pages == {0, 2, 4, 5, 6}
+
+
+def test_parse_page_ranges_invalid(tmp_path):
+    pdf_path = create_test_pdf(tmp_path, 10)
+    
+    with pytest.raises(ValueError, match="Page numbers must be >= 1"):
+        parse_page_ranges("0", str(pdf_path))
+    
+    with pytest.raises(ValueError, match="Page number out of bounds"):
+        parse_page_ranges("11", str(pdf_path))
+    
+    with pytest.raises(ValueError, match="Invalid range"):
+        parse_page_ranges("5-3", str(pdf_path))
+    
+    with pytest.raises(ValueError, match="Invalid page specifier"):
+        parse_page_ranges("abc", str(pdf_path))
+    
+    with pytest.raises(ValueError, match="Invalid page specifier"):
+        parse_page_ranges("1-", str(pdf_path))
+
+
+def test_format_page_ranges():
+    assert format_page_ranges({0}) == "1"
+    assert format_page_ranges({0, 1, 2}) == "1-3"
+    assert format_page_ranges({0, 2, 4}) == "1, 3, 5"
+    assert format_page_ranges({0, 1, 3, 4, 6}) == "1-2, 4-5, 7"
+    assert format_page_ranges({4, 1, 3, 0, 2}) == "1-5"
+    assert format_page_ranges(set()) == ""

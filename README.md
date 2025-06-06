@@ -7,7 +7,7 @@ PDFwerks is a lightweight yet comprehensive, tool for working with PDFs. It prov
 [![Run pytest](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/test.yaml/badge.svg)](https://github.com/adithya-menon-r/PDFwerks/actions/workflows/test.yaml)
 ![License](https://img.shields.io/github/license/adithya-menon-r/PDFwerks)
 
-![PDFwerks TUI](/docs/assets/TUI-Interface.png)
+![PDFwerks TUI](https://raw.githubusercontent.com/adithya-menon-r/PDFwerks/refs/heads/main/docs/assets/TUI-Interface.png)
 
 ## Documentation
 Check out the `official documentation` here: [PDFwerks Documentation](https://adithya-menon-r.github.io/PDFwerks). It's more detailed and well I put a lot of effort, so go see it :)
