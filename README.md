@@ -123,13 +123,13 @@ If you want to test, contribute or customize the tool locally:
 
 ### Optional Dependencies
 Depending on what you are working on, you can install extras as needed:
-- For **tests**
+- For **tests:**
 
     ```bash
     pip install -e .[test]
     ```
 
-- For **documentation**
+- For **documentation:**
 
     ```bash
     pip install -e .[docs]

@@ -222,7 +222,21 @@ class PDFTools:
         self.disable_pdf_encryption(file, old_pwd)
         self.generated_file.seek(0)
         self.enable_pdf_encryption(self.generated_file, new_pwd)
+    
+    def delete_pages(self, file, pages):
+        pdf = fitz.open(file)
+        pages = sorted(pages, reverse=True)
 
+        def process_file(index):
+            pdf.delete_page(index)
+        
+        progress = ProgressBar("Deleting Pages", pages)
+        progress.run(process_file)
+        self.generated_file = BytesIO()
+        pdf.save(self.generated_file)
+        pdf.close()
+        self.generated_file.seek(0)
+        
     def export(self, export_path):
         if self.generated_file is None:
             raise ValueError("No file to export.")

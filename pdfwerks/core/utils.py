@@ -1,4 +1,6 @@
+import re
 import sys
+import fitz
 from pathlib import Path
 from rich import print as printf
 
@@ -92,3 +94,54 @@ def inputf(print_msg):
     value = input()
     print()
     return value
+
+
+def parse_page_ranges(pages_input, file):
+    pages_input = re.sub(r"\s+", "", pages_input)  
+    with fitz.open(file) as pdf:
+        max_page = len(pdf)
+
+    pages = set()
+    tokens = [x for x in pages_input.split(",") if x]
+    input_pattern = re.compile(r"^(\d+)(?:-(\d+))?$")
+
+    for token in tokens:
+        match = input_pattern.match(token)
+        if not match:
+            raise ValueError(f"Invalid page specifier: '{token}'")
+
+        start = int(match.group(1)) - 1
+        end = int(match.group(2)) - 1 if match.group(2) else start
+
+        if start < 0 or end < 0:
+            raise ValueError(f"Page numbers must be >= 1")
+        if start >= max_page:
+            raise ValueError(f"Page number out of bounds: {start+1}")
+        if end >= max_page:
+            raise ValueError(f"Page number out of bounds: {end+1}")
+        if end < start:
+            raise ValueError(f"Invalid range: {start+1}-{end+1}")
+        for i in range(start, end + 1):
+            pages.add(i)
+
+    return pages
+
+
+def format_page_ranges(pages):
+    sorted_pages = sorted(pages)
+    ranges = []
+    start = end = None
+
+    for page in sorted_pages:
+        page += 1
+        if start is None:
+            start = end = page
+        elif page == end + 1:
+            end = page
+        else:
+            ranges.append((start, end))
+            start = end = page
+    if start is not None:
+        ranges.append((start, end))
+
+    return ", ".join(f"{s}" if s == e else f"{s}-{e}" for s, e in ranges)

@@ -5,8 +5,15 @@ import pyperclip
 from rich import print as printf
 
 from ..core.pdf_tools import PDFTools
-from .components import SelectionMenu, ReorderMenu
-from ..core.utils import get_files, get_save_path, get_about_text, inputf
+from .components import SelectionMenu, ReorderMenu, ConfirmationMenu
+from ..core.utils import (
+    get_files,
+    get_save_path,
+    get_about_text,
+    inputf,
+    parse_page_ranges,
+    format_page_ranges
+)
 
 OPTIONS = [
     "Merge PDFs",
@@ -14,6 +21,7 @@ OPTIONS = [
     "Convert Image to PDF",
     "Extract Text",
     "PDF Security",
+    "Delete Pages",
     "About",
     "Exit"
 ]
@@ -129,6 +137,19 @@ def run_tui():
             tool.export(save_path)
             pyperclip.copy(save_path)
             printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Processed File Saved!\n[/bold #FFD580]")
+        
+        elif menu_choice == "Delete Pages":
+            file = get_files(single_file=True)
+            pages = inputf("Enter the page numbers to delete (e.g: 2,5-8,21,30):")
+            parsed_pages = parse_page_ranges(pages, file[0])
+            if not ConfirmationMenu(f"Are you sure you want to delete the pages - {format_page_ranges(parsed_pages)}?").run():
+                sys.exit(1)
+                
+            tool.delete_pages(file[0], parsed_pages)
+            save_path = get_save_path(default_file_name="deleted.pdf")
+            tool.export(save_path)
+            pyperclip.copy(save_path)
+            printf("[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Processed PDF Saved!\n[/bold #FFD580]")
 
         elif menu_choice == "About":
             clear_screen()

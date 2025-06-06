@@ -3,7 +3,7 @@ from rich import print as printf
 
 from .arg_parse import get_parsed_args
 from ..core.pdf_tools import PDFTools
-from ..core.utils import validate_files, get_default_save_path, get_unique_save_path
+from ..core.utils import validate_files, get_default_save_path, get_unique_save_path, parse_page_ranges
 
 
 def run_cli():
@@ -149,6 +149,24 @@ def run_cli():
                 printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Password updated PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
             except Exception as e:
                 printf(f"[bold red]✗ PDF Password Updation Failed: {e}[/bold red]")
+                sys.exit(1)
+
+        elif args.command == "delete-pages":
+            files = validate_files(args.file, allowed_extensions=[".pdf"])
+
+            if len(files) < 1:
+                printf("[bold red]✗ Page Deletion Failed: 1 input file is required.[/bold red]")
+                sys.exit(1)
+
+            save_path = get_unique_save_path(args.output or get_default_save_path("deleted.pdf"))
+
+            try:
+                tool = PDFTools()
+                tool.delete_pages(files[0], parse_page_ranges(args.pages, files[0]))
+                tool.export(save_path)
+                printf(f"[#A3BE8C]✔[/#A3BE8C] [bold #FFD580] Processed PDF saved to:[/bold #FFD580] [bold]{save_path}[/bold]\n")
+            except Exception as e:
+                printf(f"[bold red]✗ Page Deletion Failed: {e}[/bold red]")
                 sys.exit(1)
         
     except KeyboardInterrupt:

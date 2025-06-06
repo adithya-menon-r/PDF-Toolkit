@@ -35,7 +35,7 @@ It has been **locally tested and verified on both Ubuntu (including WSL2) and Wi
     
     Installing `tkinter` by platform:
 
-    - **Windows && macOS:**
+    - **Windows & macOS:**
 
         Python installed from [python.org](https://www.python.org/) includes `tkinter` by default, so no extra steps are usually needed.
 
@@ -90,13 +90,13 @@ And that's it, you're good to go! Check out the [Getting Started guide](getting-
 
     Depending on what you are working on, you can install extras as needed:
 
-    - **For tests**
+    - **For tests:**
 
         ```bash
         pip install -e .[test]
         ```
 
-    - **For documentation**
+    - **For documentation:**
 
         ```bash
         pip install -e .[docs]

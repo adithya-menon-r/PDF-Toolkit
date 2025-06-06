@@ -181,4 +181,27 @@ def get_parsed_args():
         help="Optional save path. Defaults to ~/Downloads/updated_pwd.pdf"
     )
 
+    # Delete Pages Command ------------------------------------------------------------------
+    delete_pages = subparsers.add_parser(
+        "delete-pages",
+        help="Deletes the specified pages from a PDF file"
+    )
+
+    delete_pages.add_argument(
+        "file",
+        nargs=1,
+        help="Path to input PDF file"
+    )
+
+    delete_pages.add_argument(
+        "--pages",
+        required=True,
+        help="Required pages to delete. Use commas and ranges, e.g., 1,3,5-7,10",
+    )
+
+    delete_pages.add_argument(
+        "-o", "--output",
+        help="Optional save path. Defaults to ~/Downloads/deleted.pdf"
+    )
+
     return parser.parse_args()
