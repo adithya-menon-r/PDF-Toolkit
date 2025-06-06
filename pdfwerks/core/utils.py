@@ -76,7 +76,7 @@ def get_about_text():
         "[bold #FFD580]✓ Convert Image to PDF[/bold #FFD580]",
         "[bold #FFD580]✓ Extract Text[/bold #FFD580]",
         "[bold #FFD580]✓ PDF Security[/bold #FFD580]",
-        "[dim]More tools coming soon![/dim]",
+        "[bold #FFD580]✓ Delete Pages[/bold #FFD580]",
         "",
         "PDFwerks also supports CLI for quick operations - run [bold]pdfwerks --help[/bold] or check the docs to learn more.",
         "",

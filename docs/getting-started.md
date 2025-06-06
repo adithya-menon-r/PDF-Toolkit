@@ -168,6 +168,15 @@ pdfwerks update-pwd file.pdf --old-pwd OLD_PASSWORD --new-pwd NEW_PASSWORD [-o O
 - Use `--old-pwd` to specify the old password and `--new-pwd` to specify the new password for the PDF file. These are required.
 - Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/updated_pwd.pdf` if not specified)
 
+### Delete Pages
+```bash
+pdfwerks delete-pages file.pdf --pages PAGES [-o OUTPUT]
+```
+
+- Deletes the specified pages from a PDF file
+- Use `--pages` to specify pages to delete in the PDF file. Use commas and ranges, e.g., `1,3,5-7,10`. This is required.
+- Use `-o` or `--output` to specify the output file path. (Defaults to `~Downloads/deleted.pdf` if not specified)
+
 ### Help
 ```bash
 pdfwerks -h

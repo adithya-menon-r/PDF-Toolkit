@@ -19,8 +19,7 @@
 - ✅ Convert images to a PDF  
 - ✅ Extract text from a PDF to plain text, markdown or json 
 - ✅ PDF Security operations
-
-> _**More tools coming soon!**_
+- ✅ Delete Pages from a PDF
 
 !!! success "No uploads required"
     All operations happen **locally on your machine**, ensuring your sensitive documents stay secure and private. No shady websites. No dumb paid subscriptions.
